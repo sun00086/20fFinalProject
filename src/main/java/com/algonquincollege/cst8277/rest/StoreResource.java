@@ -13,12 +13,12 @@ import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_EL
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.utils.MyConstants.STORE_RESOURCE_NAME;
 
-import static com.algonquincollege.cst8277.utils.MyConstants.ADMIN_ROLE; //change
+import static com.algonquincollege.cst8277.utils.MyConstants.ADMIN_ROLE;
 
 import java.util.List;
 
 
-import javax.annotation.security.RolesAllowed; //CHANGE
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -38,12 +38,12 @@ import com.algonquincollege.cst8277.ejb.CustomerService;
 //import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.StorePojo;
 
-@Path(STORE_RESOURCE_NAME)                          //change
+@Path(STORE_RESOURCE_NAME)       // path(store)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StoreResource {
 
-    @EJB            //change
+    @EJB
     protected CustomerService customerServiceBean;
 
     @Inject
@@ -58,7 +58,6 @@ public class StoreResource {
     }
     
     @GET
-//    @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
     public Response getStoreById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific store " + id);
@@ -73,7 +72,6 @@ public class StoreResource {
         boolean result = customerServiceBean.deleteStore(id);
 
         if(result) {
-//          return Response.ok().status(Response.Status.NO_CONTENT).build();
             return Response.ok().build();
         }else {
             return Response.notModified().build();
@@ -83,12 +81,10 @@ public class StoreResource {
     @POST
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
-    public Response addStore(StorePojo newCustomer) {
+    public Response addStore(StorePojo newStore) {
       Response response = null;
-      StorePojo newCustomerWithIdTimestamps = customerServiceBean.persistStore(newCustomer);
-    //build a SecurityUser linked to the new customer
-//    customerServiceBean.buildUserForNewCustomer(newCustomerWithIdTimestamps);
-      response = Response.ok(newCustomerWithIdTimestamps).build();
+      StorePojo newStoreWithIdTimestamps = customerServiceBean.persistStore(newStore);
+      response = Response.ok(newStoreWithIdTimestamps).build();
       return response;
     }
   

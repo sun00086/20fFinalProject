@@ -49,7 +49,7 @@ import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.OrderLinePojo;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
-@Path(CUSTOMER_RESOURCE_NAME)
+@Path(CUSTOMER_RESOURCE_NAME) // "customer"
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
@@ -62,7 +62,7 @@ public class CustomerResource {
     @Inject
     protected SecurityContext sc;
     
-    @GET
+    @GET        // # GET /customer
     @RolesAllowed({ADMIN_ROLE})
     public Response getCustomers() {
         servletContext.log("retrieving all customers ...");
@@ -70,10 +70,22 @@ public class CustomerResource {
         Response response = Response.ok(custs).build();
         return response;
     }
+    
+    @POST       // POST /custmer
+    @Transactional
+    @RolesAllowed({ADMIN_ROLE})
+    public Response addCustomer(CustomerPojo newCustomer) {
+      Response response = null;
+      CustomerPojo newCustomerWithIdTimestamps = customerServiceBean.persistCustomer(newCustomer);
+      //build a SecurityUser linked to the new customer
+      customerServiceBean.buildUserForNewCustomer(newCustomerWithIdTimestamps);
+      response = Response.ok(newCustomerWithIdTimestamps).build();
+      return response;
+    }
 
-    @GET
+    @GET       // GET /customer/{id}
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
-    @Path(RESOURCE_PATH_ID_PATH)
+    @Path(RESOURCE_PATH_ID_PATH)                 //"/{" + RESOURCE_PATH_ID_ELEMENT + "}";
     public Response getCustomerById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific customer " + id);
         Response response = null;
@@ -99,23 +111,13 @@ public class CustomerResource {
         }
         return response;
     }
-    @POST
-    @Transactional
+   
+    
+    
+    
+    @DELETE     //DELETE /customer/{id} Removes a customer by its id
     @RolesAllowed({ADMIN_ROLE})
-    public Response addCustomer(CustomerPojo newCustomer) {
-      Response response = null;
-      CustomerPojo newCustomerWithIdTimestamps = customerServiceBean.persistCustomer(newCustomer);
-      //build a SecurityUser linked to the new customer
-      customerServiceBean.buildUserForNewCustomer(newCustomerWithIdTimestamps);
-      response = Response.ok(newCustomerWithIdTimestamps).build();
-      return response;
-    }
-    
-    
-    
-    @DELETE
-    @RolesAllowed({ADMIN_ROLE})
-    @Path(RESOURCE_PATH_ID_PATH)
+    @Path(RESOURCE_PATH_ID_PATH)    // customer/{id}
     public Response deleteCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         Response response = null;
         customerServiceBean.deleteCustomerById(id);
@@ -123,10 +125,11 @@ public class CustomerResource {
         return response;
     }
     
+    
+    @PUT        //PUT /customer/{id} Modify a customer by its id
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
-    @Path(RESOURCE_PATH_ID_PATH)
-    @PUT
+    @Path(RESOURCE_PATH_ID_PATH)    // customer/{id}
     public Response updateCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT)int id, CustomerPojo updatedCustomer) {
       Response response = null;
       customerServiceBean.updateCustomerById(id, updatedCustomer);
@@ -135,17 +138,17 @@ public class CustomerResource {
     }
     
     
-    @POST
-    @RolesAllowed({ADMIN_ROLE})
-    @Transactional
-    @Path("/{id}/billingAddress/{id}")
-    public Response addAddressForCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, AddressPojo newAddress) {
-      Response response = null;
-      System.out.println(newAddress.getStreet());
-      CustomerPojo updatedCustomer = customerServiceBean.setAddressFor(id, newAddress);
-      response = Response.ok(updatedCustomer).build();
-      return response;
-    }
+//    @POST       //POST /customer/{id}/billingAddress -- add a customer address by its id
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Transactional
+//    @Path("/{id}/billingAddress/{id}")
+//    public Response addAddressForCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, AddressPojo newAddress) {
+//      Response response = null;
+//      System.out.println(newAddress.getStreet());
+//      CustomerPojo updatedCustomer = customerServiceBean.setAddressFor(id, newAddress);
+//      response = Response.ok(updatedCustomer).build();
+//      return response;
+//    }
     
     
     
@@ -156,9 +159,9 @@ public class CustomerResource {
 
     @GET
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
-    @Path("/{id}/order")
+    @Path("/{id}/order")             //custmer/{id}/order
     public Response getOrders(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
-        servletContext.log("retrieving all customers ...");
+        servletContext.log("retrieving all  customers ...");
         List<OrderPojo> custs = customerServiceBean.getCustomerAllOrders(id);
         Response response = Response.ok(custs).build();
         return response;
@@ -169,7 +172,7 @@ public class CustomerResource {
     @POST
     @Transactional
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
-    @Path("/{id}/order")
+    @Path("/{id}/order")            //custmer/{id}/order
     public Response addOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, OrderPojo newCustomer) {
       Response response = null;
       CustomerPojo newCustomerWithIdTimestamps = customerServiceBean.persistCustomerOrder(id, newCustomer);

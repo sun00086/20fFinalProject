@@ -46,6 +46,7 @@ import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
  * ADMIN role of ADMIN and the USER role ... and stores all of them in the database.
  *
  */
+
 @Startup
 @Singleton
 public class BuildSecurityRolesAndUsers {

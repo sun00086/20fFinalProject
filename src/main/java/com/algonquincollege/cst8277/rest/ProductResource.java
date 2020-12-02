@@ -9,7 +9,7 @@
  */
 package com.algonquincollege.cst8277.rest;
 
-import static com.algonquincollege.cst8277.utils.MyConstants.ADMIN_ROLE;      //change
+import static com.algonquincollege.cst8277.utils.MyConstants.ADMIN_ROLE;
 import static com.algonquincollege.cst8277.utils.MyConstants.PRODUCT_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
@@ -17,7 +17,7 @@ import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PA
 import java.util.List;
 
 
-import javax.annotation.security.RolesAllowed;  //change
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -36,18 +36,18 @@ import javax.ws.rs.core.Response;
 import com.algonquincollege.cst8277.ejb.CustomerService;
 import com.algonquincollege.cst8277.models.ProductPojo;
 
-@Path(PRODUCT_RESOURCE_NAME)                            //change
+@Path(PRODUCT_RESOURCE_NAME)     //  "/product:"
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
     
-    @EJB                               //change
+    @EJB
     protected CustomerService customerServiceBean;
 
     @Inject
     protected ServletContext servletContext;
     
-    @GET
+    @GET        // get: get all products
     public Response getProducts() {
         servletContext.log("retrieving all products ...");
         List<ProductPojo> custs = customerServiceBean.getAllProducts();
@@ -55,8 +55,7 @@ public class ProductResource {
         return response;
     }
      
-    @GET                     //change
-//    @RolesAllowed({ADMIN_ROLE})
+    @GET        // get{id} get a product by its id
     @Path(RESOURCE_PATH_ID_PATH)
     public Response getProductById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific product " + id);
@@ -65,7 +64,7 @@ public class ProductResource {
         return response;
     }
     
-    @DELETE
+    @DELETE     // delete{id} delete a product by its id
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
     public Response deletetProduct(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
@@ -79,22 +78,21 @@ public class ProductResource {
         }
     }
     
-    @POST
+    @POST       // post --  Add a new product
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
-    public Response addProduct(ProductPojo newCustomer) {
+    public Response addProduct(ProductPojo newProduct) {
       Response response = null;
-      ProductPojo newCustomerWithIdTimestamps = customerServiceBean.persistProduct(newCustomer);
-      //build a SecurityUser linked to the new customer
-//      customerServiceBean.buildUserForNewCustomer(newCustomerWithIdTimestamps);
-      response = Response.ok(newCustomerWithIdTimestamps).build();
+      ProductPojo newProductWithIdTimestamps = customerServiceBean.persistProduct(newProduct);
+      response = Response.ok(newProductWithIdTimestamps).build();
       return response;
     }
     
+    
+    @PUT        // put{id}  Modify product by its id
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
-    @PUT
     public Response updateProduct(@PathParam(RESOURCE_PATH_ID_ELEMENT)int id, ProductPojo updatedCustomer) {
       Response response = null;
       customerServiceBean.updateProductById(id, updatedCustomer);
