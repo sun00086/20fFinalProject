@@ -13,6 +13,7 @@ import static com.algonquincollege.cst8277.utils.MyConstants.ADMIN_ROLE;
 import static com.algonquincollege.cst8277.utils.MyConstants.PRODUCT_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
+import static com.algonquincollege.cst8277.utils.MyConstants.USER_ROLE;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class ProductResource {
     protected ServletContext servletContext;
     
     @GET        // get: get all products
+    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getProducts() {
         servletContext.log("retrieving all products ...");
         List<ProductPojo> custs = customerServiceBean.getAllProducts();
@@ -57,6 +59,7 @@ public class ProductResource {
      
     @GET        // get{id} get a product by its id
     @Path(RESOURCE_PATH_ID_PATH)
+    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getProductById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific product " + id);
         ProductPojo theProduct = customerServiceBean.getProductById(id);

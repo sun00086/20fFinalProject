@@ -57,6 +57,7 @@ public class CustomIdentityStoreJPAHelper {
         if (securityUser != null) {
             roleNames = securityUser.getRoles().stream().map(s -> s.getRoleName()).collect(Collectors.toSet());
         }
+       
         return roleNames;
     }
 

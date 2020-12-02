@@ -124,7 +124,7 @@ components:
             }]
             properties: {
                 description: {type: string, description: "Description", example: Green Apple},
-                serialNo: {type: string, description: "serialNo", example: 100 }
+                serialNo: {type: string, description: "serialNo", example: 1156 }
             }
             
 #Store            
@@ -210,7 +210,7 @@ paths:
 
 # GET /customer
         get:
-            summary: "Retrieve all customers"
+            summary: "Retrieve all customers, (ADMIN)"
             responses: {
                 "200": {
                     description: "Ok (Successful operation)",
@@ -229,7 +229,7 @@ paths:
 
 # POST /custmer
         post:
-            summary: "Add new customer"
+            summary: "Add new customer, (ADMIN)"
             requestBody: {
                 description: "Add new customer",
                 required: true,
@@ -257,7 +257,7 @@ paths:
 # GET /customer/{id} 
     /customer/{id}:
         get:
-            summary: "Retrieve customer by its id"
+            summary: "Retrieve customer by its id, (ADMIN/USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -285,7 +285,7 @@ paths:
 
 # DELETE /customer/{id} Removes a customer by its id
         delete:
-            summary: "Removes a customer by its id"
+            summary: "Removes a customer by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -306,7 +306,7 @@ paths:
 
 # PUT /customer/{id} Modify a customer by its id
         put:
-            summary: "Modify a customer by its id"
+            summary: "Modify a customer by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -385,7 +385,7 @@ paths:
 # GET /product  Retrieves all products
     /product:
         get:
-            summary: "Retrieve all products"
+            summary: "Retrieve all products, (ADMIN,USER)"
             responses: {
                 "200": {
                     description: "Ok (Successful operation)",
@@ -403,7 +403,7 @@ paths:
             }
 #POST /product Add new product.
         post:
-            summary: "Add new product"
+            summary: "Add new product, (ADMIN)"
             requestBody: {
                 description: "Add new product",
                 required: true,
@@ -431,7 +431,7 @@ paths:
 # GET /product{id}  Retrieve product by its id
     /product/{id}:
         get:
-            summary: "Retrieve product by its id"
+            summary: "Retrieve product by its id, (ADMIN,USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -459,7 +459,7 @@ paths:
             
 # DELETE /product{id}  Delete product by its id            
         delete:
-            summary: "Delete product by its id"
+            summary: "Delete product by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -480,7 +480,7 @@ paths:
             
 # PUT /product{id}  Modify product by its id               
         put:
-            summary: "Modify a product by its id"
+            summary: "Modify a product by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -524,7 +524,7 @@ paths:
 # GET /store  Retrieve all stores           
     /store:
         get:
-            summary: "Retrieve all stores"
+            summary: "Retrieve all stores, (ADMIN, USER)"
             responses: {
                 "200": {
                     description: "Ok (Successful operation)",
@@ -542,7 +542,7 @@ paths:
             }
 # POST /store  Add a new store     
         post:
-            summary: "Add a new store"
+            summary: "Add a new store, (ADMIN)"
             requestBody: {
                 description: "new store to be added to Db",
                 required: true,
@@ -569,7 +569,7 @@ paths:
 # GET /store{id}  Retrieve a store by its id   
     /store/{id}:
         get:
-            summary: "Retrieve a store by its id"
+            summary: "Retrieve a store by its id, (ADMIN,USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -597,7 +597,7 @@ paths:
 
 # DELETE /store{id}  Delete a store by its id   
         delete:
-            summary: "Delete a store by its id"
+            summary: "Delete a store by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -618,7 +618,7 @@ paths:
             
 # PUT /store{id}  Modified a store by its id               
         put:
-            summary: "Modified a store by its id"
+            summary: "Modified a store by its id, (ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -663,7 +663,7 @@ paths:
 # GET
     /customer/{id}/order:
         get:
-            summary: "Get all orders by customer id"
+            summary: "Get all orders by customer id, (ADMIN/USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]
@@ -686,7 +686,7 @@ paths:
 #/customer/{id}/order   Add new order by customer id
 # POST
         post:
-            summary: "Add new order by customer id"
+            summary: "Add new order by customer id, (ADMIN/USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             }]

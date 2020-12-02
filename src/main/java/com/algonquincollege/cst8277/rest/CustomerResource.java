@@ -63,7 +63,7 @@ public class CustomerResource {
     protected SecurityContext sc;
     
     @GET        // # GET /customer
-    @RolesAllowed({ADMIN_ROLE})
+    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getCustomers() {
         servletContext.log("retrieving all customers ...");
         List<CustomerPojo> custs = customerServiceBean.getAllCustomers();
@@ -157,9 +157,9 @@ public class CustomerResource {
    
     //TODO - endpoints for setting up Orders/OrderLines
 
-    @GET
+    @GET                  //custmer/{id}/order
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
-    @Path("/{id}/order")             //custmer/{id}/order
+    @Path("/{id}/order")
     public Response getOrders(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("retrieving all  customers ...");
         List<OrderPojo> custs = customerServiceBean.getCustomerAllOrders(id);
@@ -169,10 +169,10 @@ public class CustomerResource {
     
     
     
-    @POST
+    @POST                    //custmer/{id}/order
     @Transactional
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
-    @Path("/{id}/order")            //custmer/{id}/order
+    @Path("/{id}/order")
     public Response addOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, OrderPojo newCustomer) {
       Response response = null;
       CustomerPojo newCustomerWithIdTimestamps = customerServiceBean.persistCustomerOrder(id, newCustomer);
@@ -181,66 +181,65 @@ public class CustomerResource {
     }
     
     
+
     
-    //--------------------------------------------------------------------------------
-    
-    @GET                     //change
-    @RolesAllowed({ADMIN_ROLE})
-    @Path("/{id}/order/{orderid}")
-    public Response getOrderById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
-      servletContext.log("try to retrieve specific product " + id);
-      OrderPojo custs  = customerServiceBean.getCustomerOrderById(id,orderid);
-      Response response = Response.ok(custs).build();
-      return response;
-    }
-
-
-    @DELETE
-    @RolesAllowed({ADMIN_ROLE})
-    @Path("/{id}/order/{orderid}")
-    public Response deletetOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid")int orderid) {
-        Response response = null;
-        OrderPojo orderdelete = customerServiceBean.deleteCustomerOrderById(id,orderid);
-        response = Response.ok(orderdelete).build();
-        return response;
-    }
-
-
-    @Transactional
-    @RolesAllowed({ADMIN_ROLE})
-    @Path("/{id}/order/{orderid}")
-    @PUT
-    public Response updateOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid, OrderPojo order) {
-      Response response = null;
-      OrderPojo orderchange=customerServiceBean.updateCustomerOrderById(id, orderid,order);
-      response = Response.ok(orderchange).build();
-      return response;
-    }
-
-//  //--------------------------------------------------------------------------------
-
-    @GET                     //change
-    @RolesAllowed({ADMIN_ROLE})
-    @Path("/{id}/order/{orderid}/orderline")
-    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
-      servletContext.log("try to retrieve specific product " + id);
-      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid);
-      Response response = Response.ok(custs).build();
-      return response;
-    }
-
-
-
-    @POST
-    @Transactional
-    @RolesAllowed({ADMIN_ROLE})
-    @Path("/{id}/order/{orderid}/orderline")
-    public Response addOrderLine(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid") int orderid, OrderLinePojo line) {
-      Response response = null;
-      OrderPojo newCustomerWithIdTimestamps = customerServiceBean.persistOrderLine(id, orderid, line);
-      response = Response.ok(newCustomerWithIdTimestamps).build();
-      return response;
-    }
+//    @GET
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Path("/{id}/order/{orderid}")
+//    public Response getOrderById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
+//      servletContext.log("try to retrieve specific product " + id);
+//      OrderPojo custs  = customerServiceBean.getCustomerOrderById(id,orderid);
+//      Response response = Response.ok(custs).build();
+//      return response;
+//    }
+//
+//
+//    @DELETE
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Path("/{id}/order/{orderid}")
+//    public Response deletetOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid")int orderid) {
+//        Response response = null;
+//        OrderPojo orderdelete = customerServiceBean.deleteCustomerOrderById(id,orderid);
+//        response = Response.ok(orderdelete).build();
+//        return response;
+//    }
+//
+//
+//    @Transactional
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Path("/{id}/order/{orderid}")
+//    @PUT
+//    public Response updateOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid, OrderPojo order) {
+//      Response response = null;
+//      OrderPojo orderchange=customerServiceBean.updateCustomerOrderById(id, orderid,order);
+//      response = Response.ok(orderchange).build();
+//      return response;
+//    }
+//
+////  //--------------------------------------------------------------------------------
+//
+//    @GET
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Path("/{id}/order/{orderid}/orderline")
+//    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
+//      servletContext.log("try to retrieve specific product " + id);
+//      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid);
+//      Response response = Response.ok(custs).build();
+//      return response;
+//    }
+//
+//
+//
+//    @POST
+//    @Transactional
+//    @RolesAllowed({ADMIN_ROLE})
+//    @Path("/{id}/order/{orderid}/orderline")
+//    public Response addOrderLine(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid") int orderid, OrderLinePojo line) {
+//      Response response = null;
+//      OrderPojo newCustomerWithIdTimestamps = customerServiceBean.persistOrderLine(id, orderid, line);
+//      response = Response.ok(newCustomerWithIdTimestamps).build();
+//      return response;
+//    }
     
 //    @GET                     //change
 //    @RolesAllowed({ADMIN_ROLE})
