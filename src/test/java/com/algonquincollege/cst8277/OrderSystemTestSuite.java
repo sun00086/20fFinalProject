@@ -9,12 +9,17 @@
  */
 package com.algonquincollege.cst8277;
 
+import static com.algonquincollege.cst8277.utils.MyConstants.PRODUCT_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.utils.MyConstants.APPLICATION_API_VERSION;
 import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_ADMIN_USER;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_ADMIN_USER_PASSWORD;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_USER_PASSWORD;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_USER_PREFIX;
+import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
+import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_ELEMENT;
+
+import static javax.ws.rs.core.Response.Status;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,10 +30,13 @@ import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
@@ -45,6 +53,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.algonquincollege.cst8277.models.CustomerPojo;
+import com.algonquincollege.cst8277.models.OrderPojo;
+import com.algonquincollege.cst8277.models.ProductPojo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -59,7 +69,8 @@ public class OrderSystemTestSuite {
     
     //TODO - if you changed your Payara's default port (to say for example 9090)
     //       your may need to alter this constant
-    static final int PORT = 9090;
+//    static final int PORT = 9090;
+    static final int PORT = 8080;
 
     // test fixture(s)
     static URI uri;
@@ -89,7 +100,7 @@ public class OrderSystemTestSuite {
         webTarget = client.target(uri);
     }
 
-    @Test
+//    @Test
     public void test01_all_customers_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
             //.register(userAuth)
@@ -101,7 +112,7 @@ public class OrderSystemTestSuite {
         List<CustomerPojo> custs = response.readEntity(new GenericType<List<CustomerPojo>>(){});
         assertThat(custs, is(not(empty())));
         //TODO - depending on what is in your Db when you run this, you may need to change the next line
-        assertThat(custs, hasSize(3));
+        assertThat(custs, hasSize(8));
     }
     
     // TODO - create39 more test-cases that send GET/PUT/POST/DELETE messages
@@ -195,31 +206,128 @@ public class OrderSystemTestSuite {
     public void test30_something() {
     }
 
-    public void test31_something() {
+    @Test
+    public void test31_create_product_with_adminRole () throws JsonMappingException, JsonProcessingException{
+        ProductPojo pp = new ProductPojo();
+        pp.setDescription("goodProduct");
+        
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PRODUCT_RESOURCE_NAME)
+            .request()
+            .post(Entity.entity(pp, MediaType.APPLICATION_JSON_TYPE));
+        assertThat(response.getStatus(), is(200));
     }
 
-    public void test32_something() {
+    @Test
+    public void test32_create_product_with_userRole() throws JsonMappingException, JsonProcessingException {
+        ProductPojo pp = new ProductPojo();
+        pp.setDescription("badProduct");
+        
+        Response response = webTarget
+            .register(userAuth)
+            .path(PRODUCT_RESOURCE_NAME)
+            .request()
+            .post(Entity.entity(pp, MediaType.APPLICATION_JSON_TYPE));
+        assertThat(response.getStatus(), is(401));
     }
     
-    public void test33_something() {
+    @Test
+    public void test33_admin_get_product_by_ID() throws JsonMappingException, JsonProcessingException{
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PRODUCT_RESOURCE_NAME+ RESOURCE_PATH_ID_PATH )
+            .resolveTemplate(RESOURCE_PATH_ID_ELEMENT, 3)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        ProductPojo pp = response.readEntity(ProductPojo.class);
+        assertThat(pp.getDescription(), is("goodProduct"));
+
+
     }
 
-    public void test34_something() {
+    @Test
+    public void test34_user_get_product_by_ID() throws JsonMappingException, JsonProcessingException{
+        Response response = webTarget
+            .register(userAuth)
+            .path(PRODUCT_RESOURCE_NAME + RESOURCE_PATH_ID_PATH)
+            .resolveTemplate(RESOURCE_PATH_ID_ELEMENT, 3)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(401));
     }
     
-    public void test35_something() {
+    @Test
+    public void test35_admin_get_all_product() throws JsonMappingException, JsonProcessingException{
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PRODUCT_RESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        List<ProductPojo> custs = response.readEntity(new GenericType<List<ProductPojo>>(){});
+        assertThat(custs, is(not(empty())));
+        //TODO - depending on what is in your Db when you run this, you may need to change the next line
+        assertThat(custs, hasSize(1));
     }
 
-    public void test36_something() {
+    @Test
+    public void test36_user_get_all_product() throws JsonMappingException, JsonProcessingException{
+        Response response = webTarget
+            .register(userAuth)
+            .path(PRODUCT_RESOURCE_NAME )
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        List<ProductPojo> custs = response.readEntity(new GenericType<List<ProductPojo>>(){});
+        assertThat(custs, is(not(empty())));
+        //TODO - depending on what is in your Db when you run this, you may need to change the next line
+        assertThat(custs, hasSize(1));
     }
     
-    public void test37_something() {
+    @Test
+    public void test37_admin_update_product() throws JsonMappingException, JsonProcessingException{
+        ProductPojo prods = new ProductPojo();
+        prods.setDescription("updateProduct");
+        
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PRODUCT_RESOURCE_NAME  + RESOURCE_PATH_ID_PATH)
+            .resolveTemplate(RESOURCE_PATH_ID_ELEMENT, 1)
+            .request()
+            .put(Entity.entity(prods, MediaType.APPLICATION_JSON_TYPE));
+            ProductPojo updateProd = response.readEntity(new GenericType<ProductPojo>() {});
+        assertThat(response.getStatus(), is(200));
+        assertThat(updateProd.getDescription(), is("updateProduct"));
+        
     }
 
-    public void test38_something() {
+    @Test
+    public void test38_user_update_product() throws JsonMappingException, JsonProcessingException{
+        ProductPojo prods = new ProductPojo();
+        prods.setDescription("updateProduct");
+        
+        Response response = webTarget
+            .register(userAuth)
+            .path(PRODUCT_RESOURCE_NAME + RESOURCE_PATH_ID_PATH)
+            .resolveTemplate(RESOURCE_PATH_ID_ELEMENT, 1)
+            .request()
+            .put(Entity.entity(prods, MediaType.APPLICATION_JSON_TYPE));
+            ProductPojo updateProd = response.readEntity(new GenericType<ProductPojo>() {});
+        assertThat(response.getStatus(), is(200));
+        assertThat(updateProd.getDescription(), is("updateProduct"));
     }
     
-    public void test39_something() {
+    @Test
+    public void test39_delete_product() throws JsonMappingException, JsonProcessingException{
+        Response response = webTarget
+            .register(adminAuth)
+            .path(PRODUCT_RESOURCE_NAME + RESOURCE_PATH_ID_PATH)
+            .resolveTemplate(RESOURCE_PATH_ID_ELEMENT, 26)
+            .request()
+            .delete();
+        assertThat(response.getStatus(), is(200));
     }
 
 }

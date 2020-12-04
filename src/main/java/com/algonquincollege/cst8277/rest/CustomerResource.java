@@ -14,7 +14,7 @@ import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_RESOURCE_N
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.utils.MyConstants.USER_ROLE;
-//import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_ADDRESS_RESOURCE_PATH;
+import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_ADDRESS_RESOURCE_PATH;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -137,22 +137,17 @@ public class CustomerResource {
       return response;
     }
     
-    
-//    @POST       //POST /customer/{id}/billingAddress -- add a customer address by its id
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Transactional
-//    @Path("/{id}/billingAddress/{id}")
-//    public Response addAddressForCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, AddressPojo newAddress) {
-//      Response response = null;
-//      System.out.println(newAddress.getStreet());
-//      CustomerPojo updatedCustomer = customerServiceBean.setAddressFor(id, newAddress);
-//      response = Response.ok(updatedCustomer).build();
-//      return response;
-//    }
-    
-    
-    
-    
+    @PUT       //PUT /customer/{id}/billingAddress -- add a customer address by its id
+    @RolesAllowed({ADMIN_ROLE})
+    @Transactional
+    @Path(CUSTOMER_ADDRESS_RESOURCE_PATH)
+    public Response addAddressForCustomer(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, AddressPojo newAddress) {
+        Response response = null;
+        CustomerPojo updatedCustomer = customerServiceBean.setAddressFor(id, newAddress);
+        response = Response.ok(updatedCustomer).build();
+        return response;
+     }
+     
   //--------------------------------------------------------------------------------
    
     //TODO - endpoints for setting up Orders/OrderLines
@@ -161,7 +156,7 @@ public class CustomerResource {
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     @Path("/{id}/order")
     public Response getOrders(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
-        servletContext.log("retrieving all  customers ...");
+        servletContext.log("retrieving all orders ...");
         List<OrderPojo> custs = customerServiceBean.getCustomerAllOrders(id);
         Response response = Response.ok(custs).build();
         return response;

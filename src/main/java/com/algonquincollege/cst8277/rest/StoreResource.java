@@ -53,8 +53,14 @@ public class StoreResource {
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getStores() {
         servletContext.log("retrieving all stores ...");
+        Response response;
         List<StorePojo> stores = customerServiceBean.getAllStores();
-        Response response = Response.ok(stores).build();
+        if(stores != null) {
+            response = Response.ok(stores).build();
+       }else {
+           response = Response.status(Response.Status.NOT_FOUND).build();
+       }
+
         return response;
     }
     
@@ -63,10 +69,15 @@ public class StoreResource {
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getStoreById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific store " + id);
+        Response response;
         StorePojo theStore = customerServiceBean.getStoreById(id);
-        Response response = Response.ok(theStore).build();
-        return response;
-    }
+        if(theStore != null) {
+            response = Response.ok(theStore).build();
+           }else {
+               response = Response.status(Response.Status.NOT_FOUND).build();
+           }
+            return response;
+        }
     @DELETE         // DELETE /store{id}  Delete a store by its id
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
