@@ -805,7 +805,7 @@ paths:
         #     } 
         
 ###################################################################################
-#          List of API -- Order  -- CustomerResource.java                         #
+#          List of API -- Order Line  -- CustomerResource.java                    #
 ###################################################################################
 # @Path(customer)          
 #/customer/{id}/order/{orderid}/orderline   Get all order line by order id
