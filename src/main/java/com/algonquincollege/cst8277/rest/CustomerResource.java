@@ -215,31 +215,31 @@ public class CustomerResource {
 //      response = Response.ok(orderchange).build();
 //      return response;
 //    }
-//
+
 ////  //--------------------------------------------------------------------------------
 //
-//    @GET
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}/orderline")
-//    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
-//      servletContext.log("try to retrieve specific product " + id);
-//      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid);
-//      Response response = Response.ok(custs).build();
-//      return response;
-//    }
+    @GET
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}/orderline")
+    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
+      servletContext.log("try to retrieve specific product " + id);
+      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid);
+      Response response = Response.ok(custs).build();
+      return response;
+    }
 //
 //
 //
-//    @POST
-//    @Transactional
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}/orderline")
-//    public Response addOrderLine(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid") int orderid, OrderLinePojo line) {
-//      Response response = null;
-//      OrderPojo newCustomerWithIdTimestamps = customerServiceBean.persistOrderLine(id, orderid, line);
-//      response = Response.ok(newCustomerWithIdTimestamps).build();
-//      return response;
-//    }
+    @POST
+    @Transactional
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}/orderline")
+    public Response addOrderLine(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid") int orderid, OrderLinePojo line) {
+      Response response = null;
+      OrderPojo newCustomerWithIdTimestamps = customerServiceBean.persistOrderLine(id, orderid, line);
+      response = Response.ok(newCustomerWithIdTimestamps).build();
+      return response;
+    }
     
 //    @GET                     //change
 //    @RolesAllowed({ADMIN_ROLE})

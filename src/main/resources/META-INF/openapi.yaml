@@ -110,9 +110,9 @@ components:
                 firstName: {type: string, description: "First Name", example: Peter},
                 lastName: {type: string, description: "Last Name", example: John},
                 email: {type: string, description: "Email", example: peter@gmail.com},
-                phoneNumber: {type: string, description: "Phone number", example: '+1.613.888.6666'},
-                billingAddress: {$ref: '#/components/schemas/Address'},
-                shippingAddress: {$ref: '#/components/schemas/Address'}
+                phoneNumber: {type: string, description: "Phone number", example: '+1.613.888.6666'}
+               # billingAddress: {$ref: '#/components/schemas/Address'},
+               # shippingAddress: {$ref: '#/components/schemas/Address'}
             }
             
 #Product            
@@ -691,7 +691,7 @@ paths:
                 $ref: "#/components/parameters/idPathParam"
             }]
             requestBody: {
-                description: "Add new order by customer id",
+                description: "Add new order by its id",
                 required: true,
                 content: {
                     application/json: {
@@ -802,84 +802,91 @@ paths:
         #         "404": {
         #             $ref: "#/components/responses/NotFound"
         #         }
-        #     }       
-
-    # /customer/{id}/order/{orderid}/orderline:
-    #     get:
-    #         parameters: [{
-    #             $ref: "#/components/parameters/idPathParam"
-    #         },{
-    #             $ref: "#/components/parameters/orderidPathParam"
-    #         }]
-    #         responses: {
-    #             "200": {
-    #                 description: "Ok (Successful operation)",
-    #                 content: {
-    #                     application/json: {
-    #                         schema: {
-    #                             $ref: "#/components/schemas/OrderLine"
-    #                         }
-    #                     }
-    #                 }
-    #             },
-    #             "401": {
-    #                 $ref: "#/components/responses/UnauthorizedAdminError"
-    #             }
-    #         }
-
-    #     post:
-    #         parameters: [{
-    #             $ref: "#/components/parameters/idPathParam"
-    #         },{
-    #             $ref: "#/components/parameters/orderidPathParam"
-    #         }]
-    #         requestBody: {
-    #             description: "new store to be added to Db",
-    #             required: true,
-    #             content: {
-    #                 application/json: {
-    #                     schema: {
-    #                         $ref: "#/components/schemas/OrderLine"
-    #                     }
-    #                 }
-    #             }
-    #         }
-    #         responses: {
-    #             "200": {
-    #                 description: "Ok (Successful operation)",
-    #                 content: {
-    #                     application/json: {
-    #                         schema: {
-    #                             $ref: "#/components/schemas/OrderLine"
-    #                         }
-    #                     }
-    #                 }
-    #             }
-    #         }
-    # /customer/{id}/order/{orderid}/orderline/{orderlineid}:
-    #     get:
-    #         parameters: [{
-    #             $ref: "#/components/parameters/idPathParam"
-    #         },{
-    #             $ref: "#/components/parameters/orderidPathParam"
-    #         },{
-    #             $ref: "#/components/parameters/orderlineidPathParam"
-    #         }]
-    #         responses: {
-    #             "200": {
-    #                 description: "Ok (Successful operation)",
-    #                 content: {
-    #                     application/json: {
-    #                         schema: {
-    #                             $ref: "#/components/schemas/OrderLine"
-    #                         }
-    #                     }
-    #                 }
-    #             },
-    #             "401": {
-    #                 $ref: "#/components/responses/UnauthorizedAdminError"
-    #             }
-    #         }
+        #     } 
+        
+###################################################################################
+#          List of API -- Order  -- CustomerResource.java                         #
+###################################################################################
+# @Path(customer)          
+#/customer/{id}/order/{orderid}/orderline   Get all order line by order id
+#GET
+    /customer/{id}/order/{orderid}/orderline:
+        get:
+            parameters: [{
+                $ref: "#/components/parameters/idPathParam"
+            },{
+                $ref: "#/components/parameters/orderidPathParam"
+            }]
+            responses: {
+                "200": {
+                    description: "Ok (Successful operation)",
+                    content: {
+                        application/json: {
+                            schema: {
+                                $ref: "#/components/schemas/OrderLine"
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    $ref: "#/components/responses/UnauthorizedAdminError"
+                }
+            }
+#/customer/{id}/order/{orderid}/orderline   Save order line by order id
+#POST
+        post:
+            parameters: [{
+                $ref: "#/components/parameters/idPathParam"
+            },{
+                $ref: "#/components/parameters/orderidPathParam"
+            }]
+            requestBody: {
+                description: "new store to be added to Db",
+                required: true,
+                content: {
+                    application/json: {
+                        schema: {
+                            $ref: "#/components/schemas/OrderLine"
+                        }
+                    }
+                }
+            }
+            responses: {
+                "200": {
+                    description: "Ok (Successful operation)",
+                    content: {
+                        application/json: {
+                            schema: {
+                                $ref: "#/components/schemas/OrderLine"
+                            }
+                        }
+                    }
+                }
+            }
+    /customer/{id}/order/{orderid}/orderline/{orderlineid}:
+        get:
+            parameters: [{
+                $ref: "#/components/parameters/idPathParam"
+            },{
+                $ref: "#/components/parameters/orderidPathParam"
+            },{
+                $ref: "#/components/parameters/orderlineidPathParam"
+            }]
+            responses: {
+                "200": {
+                    description: "Ok (Successful operation)",
+                    content: {
+                        application/json: {
+                            schema: {
+                                $ref: "#/components/schemas/OrderLine"
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    $ref: "#/components/responses/UnauthorizedAdminError"
+                }
+            }
 
         # put:
         #     parameters: [{
