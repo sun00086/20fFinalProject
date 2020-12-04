@@ -1,5 +1,6 @@
 open module com.algonquincollege.cst8277.rest.orderSystem {
 	requires org.slf4j;
+	//requires org.junit;
 	requires java.sql;
 	requires java.instrument;
     // Jakarta EE 8
