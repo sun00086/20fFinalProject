@@ -11,6 +11,8 @@ package com.algonquincollege.cst8277;
 
 import static com.algonquincollege.cst8277.utils.MyConstants.APPLICATION_API_VERSION;
 import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_RESOURCE_NAME;
+import static com.algonquincollege.cst8277.utils.MyConstants.ORDER_RESOURCE_NAME;
+import static com.algonquincollege.cst8277.utils.MyConstants.CUSTOMER_ADDRESS_SUBRESOURCE_NAME;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_ADMIN_USER;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_ADMIN_USER_PASSWORD;
 import static com.algonquincollege.cst8277.utils.MyConstants.DEFAULT_USER_PASSWORD;
@@ -20,6 +22,9 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -27,6 +32,7 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -44,7 +50,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import com.algonquincollege.cst8277.models.BillingAddressPojo;
 import com.algonquincollege.cst8277.models.CustomerPojo;
+import com.algonquincollege.cst8277.models.OrderPojo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -108,41 +116,250 @@ public class OrderSystemTestSuite {
     // to REST'ful endpoints for the OrderSystem entities using the JAX-RS
     // ClientBuilder APIs
 
-    public void test02_something() {
+    public void test02_customer_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME +"/1")
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        CustomerPojo custs = response.readEntity(new GenericType<CustomerPojo>(){});
+        assertEquals(1,custs.getId());
+        assertEquals("John",custs.getFirstName());//
+        
     }
     
-    public void test03_something() {
+    public void test03_create_customer_admin()  throws JsonMappingException, JsonProcessingException{
+        CustomerPojo custs = new CustomerPojo();
+        custs.setFirstName("lee");
+        custs.setEmail("uu@gamil.com");
+        custs.setLastName("noon");
+        custs.setPhoneNumber("887777787");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME )
+            .request()
+            .post(Entity.json(custs));
+        assertThat(response.getStatus(), is(200));
+        CustomerPojo custs2 = response.readEntity(new GenericType<CustomerPojo>(){});
+        assertEquals("lee",custs2.getFirstName());
+       
     }
 
-    public void test04_something() {
+    public void test04_update_customer_with_admin()throws JsonMappingException, JsonProcessingException {
+        CustomerPojo custs = new CustomerPojo();
+        custs.setFirstName("lee2");
+        custs.setEmail("uu2@gamil.com");
+        custs.setLastName("noon2");
+        custs.setPhoneNumber("8877777872");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME )
+            .request()
+            .post(Entity.json(custs));
+        
+        CustomerPojo custs2 = response.readEntity(new GenericType<CustomerPojo>(){});
+        assertEquals("lee2",custs2.getFirstName());
+        
+        custs2.setEmail("uu3@gamil.com");
+        
+        Response response2 = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME )
+            .request()
+            .put(Entity.json(custs2));
+        assertEquals(200,response2.getStatus());
+        CustomerPojo custs3 = response.readEntity(new GenericType<CustomerPojo>(){});
+        assertEquals("uu3@gamil.com",custs3.getEmail());
     }
     
-    public void test05_something() {
+    public void test05_delete_customer_with_admin() throws JsonMappingException, JsonProcessingException{
+        CustomerPojo custs = new CustomerPojo();
+        custs.setFirstName("lee21");
+        custs.setEmail("uu21@gamil.com");
+        custs.setLastName("noon21");
+        custs.setPhoneNumber("88777778721");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME )
+            .request()
+            .post(Entity.json(custs));
+        assertEquals(200,response.getStatus());
+        CustomerPojo custs3 = response.readEntity(new GenericType<CustomerPojo>(){});
+        
+        int id = custs.getId();
+        Response response3 = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME + "/"+id )
+            .request()
+            .delete();
+        
+        CustomerPojo custs4 = response3.readEntity(new GenericType<CustomerPojo>(){});
+        assertEquals(200, response.getStatus());
+        assertEquals("lee21", custs4.getFirstName());
+    }
+    
+    public void test06_create_order_admin()  throws JsonMappingException, JsonProcessingException{
+        OrderPojo or = new OrderPojo();
+        or.setDescription("one");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME  )
+            .request()
+            .post(Entity.json(or));
+        assertThat(response.getStatus(), is(200));
+        OrderPojo or2 = response.readEntity(new GenericType<OrderPojo>(){});
+        assertEquals("one",or2.getDescription());
+       
+    }
+    public void test07_order_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME +"/1")
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        OrderPojo or2 = response.readEntity(new GenericType<OrderPojo>(){});
+        assertEquals(1,or2.getId());
+        assertEquals("one",or2.getDescription());//
+        
     }
 
-    public void test06_something() {
+    public void test08_update_order_with_admin()throws JsonMappingException, JsonProcessingException {
+        OrderPojo or = new OrderPojo();
+        or.setDescription("two");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME )
+            .request()
+            .post(Entity.json(or));
+        
+        OrderPojo or2 =  response.readEntity(new GenericType<OrderPojo>(){});
+        assertEquals("two",or2.getDescription());
+        or2.setDescription("change two");
+        Response response2 = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME )
+            .request()
+            .put(Entity.json(or2));
+        assertEquals(200,response2.getStatus());
+        OrderPojo  or3 = response.readEntity(new GenericType< OrderPojo >(){});
+        assertEquals("change two",or3.getDescription());
+    }
+    public void test09_delete_customer_with_admin() throws JsonMappingException, JsonProcessingException{
+        OrderPojo or = new OrderPojo();
+     
+        or.setDescription("three");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME )
+            .request()
+            .post(Entity.json(or));
+        assertEquals(200,response.getStatus());
+        OrderPojo or2 = response.readEntity(new GenericType<OrderPojo>(){});
+        
+        int id = or2.getId();
+        Response response3 = webTarget
+            .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME + "/"+id )
+            .request()
+            .delete();
+        
+        OrderPojo or3= response3.readEntity(new GenericType<OrderPojo>(){});
+        assertEquals(200, response.getStatus());
+        assertEquals("three", or3.getDescription());
     }
     
-    public void test07_something() {
+    public void test10_create_address_admin()  throws JsonMappingException, JsonProcessingException{
+        BillingAddressPojo bs = new BillingAddressPojo();
+        bs.setCity("ottawa");
+        bs.setCountry("canada");
+        bs.setState("ON");
+        bs.setPostal("v8v n8u");
+        bs.setStreet("boolyn");
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME  )
+            .request()
+            .post(Entity.json(bs));
+        assertThat(response.getStatus(), is(200));
+        BillingAddressPojo bs2 = response.readEntity(new GenericType<BillingAddressPojo>(){});
+        assertEquals("ottawa",bs2.getCity());
+       
+    }
+    public void test11_address_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME  +"/1")
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        BillingAddressPojo or2 = response.readEntity(new GenericType<BillingAddressPojo>(){});
+        assertEquals(1,or2.getId());
+        assertEquals("ottawa",or2.getCity());//
+        
+    }
+    
+    public void test12_update_address_with_admin()throws JsonMappingException, JsonProcessingException {
+        BillingAddressPojo bs = new BillingAddressPojo();
+     
+        bs.setCity("ottawas");
+        bs.setCountry("canadas");
+        bs.setState("ONs");
+        bs.setPostal("v8v n8us");
+        bs.setStreet("boolyns");
+        
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME  )
+            .request()
+            .post(Entity.json(bs));
+        
+        BillingAddressPojo bs2 =  response.readEntity(new GenericType<BillingAddressPojo>(){});
+        assertEquals("ottawas",bs2.getCity());
+        bs2.setCity("salt city");
+        Response response2 = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME  )
+            .request()
+            .put(Entity.json(bs2));
+        assertEquals(200,response2.getStatus());
+        BillingAddressPojo  bs3 = response.readEntity(new GenericType< BillingAddressPojo >(){});
+        assertEquals("salt city",bs3.getCity());
     }
 
-    public void test08_something() {
-    }
-    
-    public void test09_something() {
-    }
-    
-    public void test10_something() {
-    }
+    public void test13_delete_address_with_admin() throws JsonMappingException, JsonProcessingException{
 
-    public void test11_something() {
-    }
-
-    public void test12_something() {
+        BillingAddressPojo bs = new BillingAddressPojo();
+        bs.setCity("ottawase");
+        bs.setCountry("canadase");
+        bs.setState("ONse");
+        bs.setPostal("v8v n8use");
+        bs.setStreet("boolynse");
+        
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME)
+            .request()
+            .post(Entity.json(bs));
+        assertEquals(200,response.getStatus());
+        BillingAddressPojo bs2 = response.readEntity(new GenericType<BillingAddressPojo>(){});
+        
+        int id = bs2.getId();
+        Response response3 = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME + "/"+id )
+            .request()
+            .delete();
+        
+        BillingAddressPojo bs3= response3.readEntity(new GenericType<BillingAddressPojo>(){});
+        assertEquals(200, response.getStatus());
+        assertEquals("ottawase", bs3.getCity());
     }
     
-    public void test13_something() {
-    }
+    
+    
+   
 
     public void test14_something() {
     }
