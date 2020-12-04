@@ -14,6 +14,7 @@ import static com.algonquincollege.cst8277.utils.MyConstants.PRODUCT_RESOURCE_NA
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utils.MyConstants.RESOURCE_PATH_ID_PATH;
 import static com.algonquincollege.cst8277.utils.MyConstants.USER_ROLE;
+import static javax.ws.rs.core.Response.Status.OK;
 
 import java.util.List;
 
@@ -62,8 +63,14 @@ public class ProductResource {
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getProductById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
         servletContext.log("try to retrieve specific product " + id);
+        Response response;
         ProductPojo theProduct = customerServiceBean.getProductById(id);
-        Response response = Response.ok(theProduct).build();
+        if(theProduct != null) {
+             response = Response.ok(theProduct).build();
+             servletContext.log("retrieve product description " + theProduct.getDescription());
+        }else {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
         return response;
     }
     
@@ -99,7 +106,7 @@ public class ProductResource {
     public Response updateProduct(@PathParam(RESOURCE_PATH_ID_ELEMENT)int id, ProductPojo updatedCustomer) {
       Response response = null;
       customerServiceBean.updateProductById(id, updatedCustomer);
-      response = Response.ok().build();
+      response = Response.ok(updatedCustomer).build();
       return response;
     }
 }

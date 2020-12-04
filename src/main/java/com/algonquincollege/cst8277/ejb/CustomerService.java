@@ -115,6 +115,9 @@ public class CustomerService implements Serializable {
             cust.setLastName(updatedcustomer.getLastName());
             cust.setEmail(updatedcustomer.getEmail());
             cust.setPhoneNumber(updatedcustomer.getPhoneNumber());
+            cust.setBillingAddress(updatedcustomer.getBillingAddress());
+            cust.setShippingAddress(updatedcustomer.getShippingAddress());
+//            cust.setOrders(cust.getOrders());
             em.merge(cust);
         }
     }
@@ -186,14 +189,19 @@ public class CustomerService implements Serializable {
     }
 
     public ProductPojo getProductById(int prodId) {
+        ProductPojo product = null;
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<ProductPojo> q1 = cb.createQuery(ProductPojo.class);
-            Root<ProductPojo> root = q1.from(ProductPojo.class);
-            q1.where(cb.equal((root.get(ProductPojo_.id)),prodId));
-            
-            TypedQuery<ProductPojo> tq = em.createQuery(q1);
-            ProductPojo product = tq.getSingleResult();
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<ProductPojo> q1 = cb.createQuery(ProductPojo.class);
+//            Root<ProductPojo> root = q1.from(ProductPojo.class);
+//            q1.where(cb.equal((root.get(ProductPojo_.id)),prodId));
+//
+//            TypedQuery<ProductPojo> tq = em.createQuery(q1);
+//            ProductPojo product = tq.getSingleResult();
+            product = em.createQuery("select p from Product p where p.id = :param1", ProductPojo.class)
+                .setParameter(PARAM1, prodId)
+                .getSingleResult();
+            System.out.println(product);
             return product;
         }
         catch (Exception e) {
@@ -239,12 +247,14 @@ public class CustomerService implements Serializable {
     
     public List<StorePojo> getAllStores() {
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<StorePojo> q = cb.createQuery(StorePojo.class);
-            Root<StorePojo> c = q.from(StorePojo.class);
-            q.select(c);
-            TypedQuery<StorePojo> q2 = em.createQuery(q);
-            List<StorePojo> stores = q2.getResultList();
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<StorePojo> q = cb.createQuery(StorePojo.class);
+//            Root<StorePojo> c = q.from(StorePojo.class);
+//            q.select(c);
+//            TypedQuery<StorePojo> q2 = em.createQuery(q);
+//            List<StorePojo> stores = q2.getResultList();
+            List<StorePojo> stores = em.createQuery("select s from Stores s", StorePojo.class)
+                .getResultList();
             return stores;
         }
         catch (Exception e) {
@@ -253,15 +263,20 @@ public class CustomerService implements Serializable {
     }
 
     public StorePojo getStoreById(int id) {
+        StorePojo store = null;
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<StorePojo> q1 = cb.createQuery(StorePojo.class);
-            Root<StorePojo> root = q1.from(StorePojo.class);
-            q1.where(cb.equal((root.get(StorePojo_.id)),id));
-            
-            TypedQuery<StorePojo> tq = em.createQuery(q1);
-            StorePojo product = tq.getSingleResult();
-            return product;
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery<StorePojo> q1 = cb.createQuery(StorePojo.class);
+//            Root<StorePojo> root = q1.from(StorePojo.class);
+//            q1.where(cb.equal((root.get(StorePojo_.id)),id));
+//
+//            TypedQuery<StorePojo> tq = em.createQuery(q1);
+//            StorePojo product = tq.getSingleResult();
+            store = em.createQuery("select s from Stores s where s.id = :param1", StorePojo.class)
+                .setParameter(PARAM1, id)
+                .getSingleResult();
+//            System.out.println(product);
+            return store;
         }
         catch (Exception e) {
             return null;
