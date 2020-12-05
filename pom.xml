@@ -8,7 +8,7 @@
   <artifactId>rest-orderSystem</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>20F_GroupProject_GroupName</name>
+  <name>20F_GroupProject_24(Feng Sun,Wang Peng,Yang Shuting)</name>
   <description>REST Order System</description>
 
   <!-- why is everything a property? Because hard-coded values become part 

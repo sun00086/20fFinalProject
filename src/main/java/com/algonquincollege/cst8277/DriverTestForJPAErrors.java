@@ -1,11 +1,15 @@
-package com.algonquincollege.cst8277;
 /***************************************************************************f******************u************zz*******y**
  * File: Assignment3Driver.java
  * Course materials (20W) CST 8277
  * @author Mike Norman
- * @author Qing Wang
+ * 
+ * 
+ * (Modified) @author Feng Sun,Wang Peng,Yang Shuting
  *
  */
+
+package com.algonquincollege.cst8277;
+
 //package com.algonquincollege.cst8277;
 
 

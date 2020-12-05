@@ -4,7 +4,7 @@
  *
  * @author (original) Mike Norman
  * 
- * update by : I. Am. A. Student 040nnnnnnn
+ * (Modified) @author Feng Sun,Wang Peng,Yang Shuting
  */
 package com.algonquincollege.cst8277.security;
 

@@ -5,7 +5,8 @@
  *
  * @date 2020 10
  *
- * (Modified) @author Student Name
+ * (Modified) @author Feng Sun,Wang Peng,Yang Shuting
+ * 
  */
 package com.algonquincollege.cst8277;
 
