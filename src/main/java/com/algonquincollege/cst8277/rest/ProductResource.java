@@ -61,7 +61,7 @@ public class ProductResource {
      * @return the products
      */
     @GET        // get: get all products
-    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
+    @RolesAllowed({ADMIN_ROLE})
     public Response getProducts() {
         servletContext.log("retrieving all products ...");
         List<ProductPojo> custs = customerServiceBean.getAllProducts();

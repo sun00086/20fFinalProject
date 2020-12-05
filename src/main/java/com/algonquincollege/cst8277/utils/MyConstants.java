@@ -38,6 +38,7 @@ public interface MyConstants {
     public static final String CREDENTIAL_RESOURCE_NAME = "credential";
     public static final String CUSTOMER_RESOURCE_NAME =  "customer";
     public static final String ORDER_RESOURCE_NAME =  "order";
+    public static final String ORDERLINE_RESOURCE_NAME =  "orderline";
     public static final String PRODUCT_RESOURCE_NAME =  "product";
     public static final String STORE_RESOURCE_NAME =  "store";
     public static final String CUSTOMER_ADDRESS_SUBRESOURCE_NAME =  "address";
