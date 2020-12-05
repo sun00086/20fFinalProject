@@ -29,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * Role class used for (JSR-375) Java EE Security authorization/authentication.
  */

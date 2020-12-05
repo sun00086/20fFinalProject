@@ -37,7 +37,7 @@ import com.algonquincollege.cst8277.models.SecurityRole;
 import com.algonquincollege.cst8277.models.SecurityUser;
 import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * This Stateless Session bean is 'special' because it is also a Singleton and
  * it runs at startup.

@@ -16,7 +16,7 @@ package com.algonquincollege.cst8277;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class DriverTestForJPAErrors.
  */

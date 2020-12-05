@@ -14,7 +14,7 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class PBKDF2HashGenerator.
  */

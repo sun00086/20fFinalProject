@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response;
 import com.algonquincollege.cst8277.ejb.CustomerService;
 import com.algonquincollege.cst8277.models.ProductPojo;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class ProductResource.
  */

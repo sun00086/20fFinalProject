@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Description: model for the OrderLine object.
  */

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-// TODO: Auto-generated Javadoc
+
 
 /**
  * The Class BillingAddressPojo.

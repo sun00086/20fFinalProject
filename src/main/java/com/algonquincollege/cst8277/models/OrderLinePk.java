@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-// TODO: Auto-generated Javadoc
+
 
 /**
  * The Class OrderLinePk.

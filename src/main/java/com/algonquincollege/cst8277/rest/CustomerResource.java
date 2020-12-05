@@ -49,7 +49,7 @@ import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.OrderLinePojo;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class CustomerResource.
  */

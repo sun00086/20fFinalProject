@@ -19,7 +19,7 @@ import javax.annotation.security.DeclareRoles;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class RestConfig.
  */

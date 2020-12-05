@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Description: model for the Order object.
  */

@@ -27,7 +27,7 @@ import org.glassfish.soteria.WrappingCallerPrincipal;
 
 import com.algonquincollege.cst8277.models.SecurityUser;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Descript: REST endpoint class to test authorization/authentication.
  */

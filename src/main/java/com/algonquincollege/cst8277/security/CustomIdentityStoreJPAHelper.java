@@ -25,7 +25,7 @@ import javax.transaction.Transactional;
 import com.algonquincollege.cst8277.models.SecurityRole;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class CustomIdentityStoreJPAHelper.
  */

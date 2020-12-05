@@ -36,7 +36,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-// TODO: Auto-generated Javadoc
 /**
  * User class used for (JSR-375) Java EE Security authorization/authentication.
  */

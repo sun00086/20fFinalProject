@@ -32,7 +32,7 @@ import static com.algonquincollege.cst8277.models.CustomerPojo.FIND_CUSTOMERS_QU
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Description: model for the Customer object.
  */

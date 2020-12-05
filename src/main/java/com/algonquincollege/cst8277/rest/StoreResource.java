@@ -38,7 +38,7 @@ import com.algonquincollege.cst8277.ejb.CustomerService;
 //import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.StorePojo;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class StoreResource.
  */

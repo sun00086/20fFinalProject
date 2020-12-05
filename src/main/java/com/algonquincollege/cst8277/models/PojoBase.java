@@ -21,7 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-// TODO: Auto-generated Javadoc
 /**
  * Abstract class that is base of (class) hierarchy for all c.a.cst8277.models @Entity classes
  */

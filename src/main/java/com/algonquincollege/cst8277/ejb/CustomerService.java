@@ -59,7 +59,7 @@ import com.algonquincollege.cst8277.models.ShippingAddressPojo;
 import com.algonquincollege.cst8277.models.StorePojo;
 import com.algonquincollege.cst8277.models.StorePojo_;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Stateless Singleton Session Bean - CustomerService.
  */
