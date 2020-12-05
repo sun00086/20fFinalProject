@@ -201,7 +201,7 @@ public class CustomerService implements Serializable {
             product = em.createQuery("select p from Product p where p.id = :param1", ProductPojo.class)
                 .setParameter(PARAM1, prodId)
                 .getSingleResult();
-            System.out.println(product);
+
             return product;
         }
         catch (Exception e) {
@@ -400,6 +400,7 @@ public class CustomerService implements Serializable {
     @Transactional
     public List<OrderPojo> getCustomerAllOrders(int id) {
         CustomerPojo cust = em.find(CustomerPojo.class, id);
+
         return cust.getOrders();
     }
     @Transactional
@@ -407,7 +408,7 @@ public class CustomerService implements Serializable {
         CustomerPojo cust = em.find(CustomerPojo.class, id);
         OrderPojo order = em.find(OrderPojo.class, orderid);
         CustomerPojo owner=order.getOwningCustomer();
-        if (owner!=null &owner.equals(cust))
+        if (owner!=null && owner.equals(cust))
             return order;
         return null;
     }
@@ -435,8 +436,10 @@ public class CustomerService implements Serializable {
     @Transactional
     public List<OrderLinePojo> getCustomerOrderLineById(int id, int orderid) {
         OrderPojo order = getCustomerOrderById (id,orderid);
-        
-        List<OrderLinePojo> line = order.getOrderlines();
+        List<OrderLinePojo> line = null;
+        if(order!=null) {
+            line = order.getOrderlines();
+        }
         return line;
     }
     
@@ -444,9 +447,9 @@ public class CustomerService implements Serializable {
     public OrderPojo persistOrderLine(int id, int orderid, OrderLinePojo line) {
         
         OrderPojo order = getCustomerOrderById (id,orderid);
-        ProductPojo p = getProductById(line.getProduct().getId());
+//        ProductPojo p = getProductById(line.getProduct().getId());
      
-        line.setProduct(p);
+//        line.setProduct(p);
         order.addOrderline(line);
         em.persist(line);
         em.flush();
