@@ -812,6 +812,7 @@ paths:
 #GET
     /customer/{id}/order/{orderid}/orderline:
         get:
+            summary: "Retrieves order lines(ADMIN/USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             },{
@@ -835,6 +836,7 @@ paths:
 #/customer/{id}/order/{orderid}/orderline   Save order line by order id
 #POST
         post:
+            summary: "Add order line(ADMIN)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             },{
@@ -865,6 +867,7 @@ paths:
             }
     /customer/{id}/order/{orderid}/orderline/{orderlineid}:
         get:
+            summary: "Retrieves order lines(ADMIN/USER)"
             parameters: [{
                 $ref: "#/components/parameters/idPathParam"
             },{
@@ -888,58 +891,59 @@ paths:
                 }
             }
 
-        # put:
-        #     parameters: [{
-        #         $ref: "#/components/parameters/idPathParam"
-        #     },{
-        #         $ref: "#/components/parameters/orderidPathParam"
-        #     },{
-        #         $ref: "#/components/parameters/orderlineidPathParam"
-        #     }]
-        #     requestBody: {
-        #         description: "new store to be added to Db",
-        #         required: true,
-        #         content: {
-        #             application/json: {
-        #                 schema: {
-        #                     $ref: "#/components/schemas/OrderLine"
-        #                 }
-        #             }
-        #         }
-        #     }
-        #     responses: {
-        #         "200": {
-        #             description: "Ok (Successful operation)",
-        #             content: {
-        #                 application/json: {
-        #                     schema: {
-        #                         $ref: "#/components/schemas/OrderLine"
-        #                     }
-        #                 }
-        #             }
-        #         }
-        #     }
-        # delete:
-        #     summary: "Removes a store by its id"
-        #     parameters: [{
-        #         $ref: "#/components/parameters/idPathParam"
-        #     },{
-        #         $ref: "#/components/parameters/orderidPathParam"
-        #     },{
-        #         $ref: "#/components/parameters/orderlineidPathParam"
-        #     }]
-        #     responses: {
-        #         "204": {
-        #             description: "Ok (No content, successful operation)"
-        #         },
-        #         "401": {
-        #             $ref: "#/components/responses/UnauthorizedUserError"
-        #         },
-        #         "403": {
-        #             $ref: "#/components/responses/ForbiddenError"
-        #         },
-        #         "404": {
-        #             $ref: "#/components/responses/NotFound"
-        #         }
-        #     }
+        put:
+            summary: "Modified order lines(ADMIN)"
+            parameters: [{
+                $ref: "#/components/parameters/idPathParam"
+            },{
+                $ref: "#/components/parameters/orderidPathParam"
+            },{
+                $ref: "#/components/parameters/orderlineidPathParam"
+            }]
+            requestBody: {
+                description: "new store to be added to Db",
+                required: true,
+                content: {
+                    application/json: {
+                        schema: {
+                            $ref: "#/components/schemas/OrderLine"
+                        }
+                    }
+                }
+            }
+            responses: {
+                "200": {
+                    description: "Ok (Successful operation)",
+                    content: {
+                        application/json: {
+                            schema: {
+                                $ref: "#/components/schemas/OrderLine"
+                            }
+                        }
+                    }
+                }
+            }
+        delete:
+            summary: "Delete order lines(ADMIN)"
+            parameters: [{
+                $ref: "#/components/parameters/idPathParam"
+            },{
+                $ref: "#/components/parameters/orderidPathParam"
+            },{
+                $ref: "#/components/parameters/orderlineidPathParam"
+            }]
+            responses: {
+                "204": {
+                    description: "Ok (No content, successful operation)"
+                },
+                "401": {
+                    $ref: "#/components/responses/UnauthorizedUserError"
+                },
+                "403": {
+                    $ref: "#/components/responses/ForbiddenError"
+                },
+                "404": {
+                    $ref: "#/components/responses/NotFound"
+                }
+            }
     

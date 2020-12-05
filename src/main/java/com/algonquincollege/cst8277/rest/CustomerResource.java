@@ -189,30 +189,29 @@ public class CustomerResource {
 //    }
 //
 //
-//    @DELETE
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}")
-//    public Response deletetOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid")int orderid) {
-//        Response response = null;
-//        OrderPojo orderdelete = customerServiceBean.deleteCustomerOrderById(id,orderid);
-//        response = Response.ok(orderdelete).build();
-//        return response;
-//    }
-//
-//
-//    @Transactional
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}")
-//    @PUT
-//    public Response updateOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid, OrderPojo order) {
-//      Response response = null;
-//      OrderPojo orderchange=customerServiceBean.updateCustomerOrderById(id, orderid,order);
-//      response = Response.ok(orderchange).build();
-//      return response;
-//    }
+    @DELETE
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}")
+    public Response deletetOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, @PathParam("orderid")int orderid) {
+        Response response = null;
+        OrderPojo orderdelete = customerServiceBean.deleteCustomerOrderById(id,orderid);
+        response = Response.ok(orderdelete).build();
+        return response;
+    }
 
-////  //--------------------------------------------------------------------------------
-//
+
+    @Transactional
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}")
+    @PUT
+    public Response updateOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid, OrderPojo order) {
+      Response response = null;
+      OrderPojo orderchange=customerServiceBean.updateCustomerOrderById(id, orderid,order);
+      response = Response.ok(orderchange).build();
+      return response;
+    }
+
+
     @GET
     @RolesAllowed({ADMIN_ROLE})
     @Path("/{id}/order/{orderid}/orderline")
@@ -236,7 +235,7 @@ public class CustomerResource {
       return response;
     }
     
-//    @GET                     //change
+//    @GET
 //    @RolesAllowed({ADMIN_ROLE})
 //    @Path("/{id}/order/{orderid}/orderline/{orderlineid}")
 //    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid , @PathParam("orderlineid") int orderlineid) {

@@ -8,7 +8,7 @@
         <property name="User" value="sa"/> 
         <property name="Password" value="password"/>
         <!-- <property name="URL" value="jdbc:h2:mem:20fcustomers"/> -->
-        <property name="URL" value="jdbc:h2:tcp://localhost:12345/~/20fGroupProject1"/>
+        <property name="URL" value="jdbc:h2:tcp://localhost:12345/~/20fGroupProject2"/>
     </jdbc-connection-pool>
     <jdbc-resource jndi-name="java:app/jdbc/orderSystem" pool-name="orderSystemConnectionPool">
         <description>DataSource for ACME Customers Order System</description>
