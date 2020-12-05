@@ -52,6 +52,8 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.algonquincollege.cst8277.models.BillingAddressPojo;
 import com.algonquincollege.cst8277.models.CustomerPojo;
+import com.algonquincollege.cst8277.models.OrderLinePk;
+import com.algonquincollege.cst8277.models.OrderLinePojo;
 import com.algonquincollege.cst8277.models.OrderPojo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -356,34 +358,128 @@ public class OrderSystemTestSuite {
         assertEquals(200, response.getStatus());
         assertEquals("ottawase", bs3.getCity());
     }
+    public void test14_customers_with_not_adminrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+           // .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(401));
+  
+    }
+    public void test15_order_with_not_adminrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+           // .register(adminAuth)
+            .path(ORDER_RESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(401));
+  
+    }
+    public void test16_address_with_not_adminrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+           // .register(adminAuth)
+            .path(CUSTOMER_ADDRESS_SUBRESOURCE_NAME)
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(401));
+  
+    }
     
     
+    public void test17_create_orderline_admin()  throws JsonMappingException, JsonProcessingException{
+        
+        OrderLinePojo ol = new OrderLinePojo ();
+        ol.setAmount(66.00);
+        Response response = webTarget
+            .register(adminAuth)
+            .path("orderline" )
+            .request()
+            .post(Entity.json(ol));
+        assertThat(response.getStatus(), is(200));
+        OrderLinePojo  ol2 = response.readEntity(new GenericType<OrderLinePojo >(){});
+        assertEquals(66.00,ol2.getAmount());
+       
+    }
     
+    public void test18_orderline_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(adminAuth)
+            .path(CUSTOMER_RESOURCE_NAME +"/1")
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(200));
+        OrderLinePojo  ol = response.readEntity(new GenericType<OrderLinePojo >(){});
+        assertEquals(1,ol.getPk());
+        assertEquals(66.00,ol.getAmount());//
+        
+    }
+    
+
+
+    public void test19_update_customer_with_admin()throws JsonMappingException, JsonProcessingException {
+        OrderLinePojo  ol = new OrderLinePojo ();
+       ol.setAmount(77.00);
+
+        Response response = webTarget
+            .register(adminAuth)
+            .path("orderline" )
+            .request()
+            .post(Entity.json(ol));
+        
+        OrderLinePojo  ol2= response.readEntity(new GenericType<OrderLinePojo >(){});
+        assertEquals(77.00,ol2.getAmount());
+        
+        ol2.setAmount(88.00);
+        Response response2 = webTarget
+            .register(adminAuth)
+            .path("orderline" )
+            .request()
+            .put(Entity.json(ol2));
+        assertEquals(200,response2.getStatus());
+        OrderLinePojo  ol3 = response.readEntity(new GenericType<OrderLinePojo >(){});
+        assertEquals(88.00,ol3.getAmount());
+    }
+    
+    public void test20_delete_customer_with_admin() throws JsonMappingException, JsonProcessingException{
+        OrderLinePojo  ol = new OrderLinePojo ();
+        ol.setAmount(99.00);
+        Response response = webTarget
+            .register(adminAuth)
+            .path("orderline" )
+            .request()
+            .post(Entity.json(ol));
+        assertEquals(200,response.getStatus());
+        OrderLinePojo  ol2 = response.readEntity(new GenericType<OrderLinePojo >(){});
+        
+        OrderLinePk id = ol.getPk();
+        Response response3 = webTarget
+            .register(adminAuth)
+            .path("orderline" + "/"+id )
+            .request()
+            .delete();
+        
+        OrderLinePojo  ol3 = response3.readEntity(new GenericType<OrderLinePojo >(){});
+        assertEquals(200, response.getStatus());
+        assertEquals(99.00,ol3.getAmount());
+    }
    
 
-    public void test14_something() {
+    public void test21_address_with_not_adminrole() throws JsonMappingException, JsonProcessingException {
+        Response response = webTarget
+            .register(userAuth)
+           // .register(adminAuth)
+            .path("orderline")
+            .request()
+            .get();
+        assertThat(response.getStatus(), is(401));
+  
     }
     
-    public void test15_something() {
-    }
-
-    public void test16_something() {
-    }
-    
-    public void test17_something() {
-    }
-
-    public void test18_something() {
-    }
-    
-    public void test19_something() {
-    }
-    
-    public void test20_something() {
-    }
-
-    public void test21_something() {
-    }
+  
 
     public void test22_something() {
     }
