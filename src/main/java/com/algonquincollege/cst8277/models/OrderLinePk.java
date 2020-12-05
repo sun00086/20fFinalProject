@@ -13,35 +13,72 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+// TODO: Auto-generated Javadoc
+
+/**
+ * The Class OrderLinePk.
+ */
 @Embeddable
 public class OrderLinePk implements Serializable {
-    /** explicit set serialVersionUID */
+    
+    /**  explicit set serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The owning order id. */
     protected int owningOrderId;
+    
+    /** The order line no. */
     protected int orderLineNo;
     
+    /**
+     * Gets the owning order id.
+     *
+     * @return the owning order id
+     */
     @Column(name="OWNING_ORDER_ID")
     public int getOwningOrderId() {
         return owningOrderId;
     }
+    
+    /**
+     * Sets the owning order id.
+     *
+     * @param owningOrderId the new owning order id
+     */
     public void setOwningOrderId(int owningOrderId) {
         this.owningOrderId = owningOrderId;
     }
     
+    /**
+     * Gets the order line no.
+     *
+     * @return the order line no
+     */
     @Column(name="ORDERLINE_NO")
     public int getOrderLineNo() {
         return orderLineNo;
     }
+    
+    /**
+     * Sets the order line no.
+     *
+     * @param orderLineNo the new order line no
+     */
     public void setOrderLineNo(int orderLineNo) {
         this.orderLineNo = orderLineNo;
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return Objects.hash(orderLineNo, owningOrderId);
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

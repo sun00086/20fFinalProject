@@ -12,9 +12,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClientErrorExceptionMapper.
+ */
 @Provider
 public class ClientErrorExceptionMapper implements ExceptionMapper<ClientErrorException> {
     
+    /* (non-Javadoc)
+     * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
+     */
     @Override
     public Response toResponse(ClientErrorException exception) {
       Response response = exception.getResponse();

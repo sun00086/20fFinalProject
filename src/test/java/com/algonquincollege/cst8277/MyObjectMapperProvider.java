@@ -16,16 +16,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MyObjectMapperProvider.
+ */
 @Provider
 public class MyObjectMapperProvider implements ContextResolver<ObjectMapper> {
+    
+    /** The default object mapper. */
     final ObjectMapper defaultObjectMapper;
+    
+    /**
+     * Instantiates a new my object mapper provider.
+     */
     public MyObjectMapperProvider() {
         defaultObjectMapper = createDefaultMapper();
     }
+    
+    /* (non-Javadoc)
+     * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
+     */
     @Override
     public ObjectMapper getContext(Class<?> type) {
             return defaultObjectMapper;
         }
+    
+    /**
+     * Creates the default mapper.
+     *
+     * @return the object mapper
+     */
     private static ObjectMapper createDefaultMapper() {
         final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())

@@ -38,17 +38,28 @@ import javax.ws.rs.core.Response;
 import com.algonquincollege.cst8277.ejb.CustomerService;
 import com.algonquincollege.cst8277.models.ProductPojo;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProductResource.
+ */
 @Path(PRODUCT_RESOURCE_NAME)     //  "/product:"
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
     
+    /** The customer service bean. */
     @EJB
     protected CustomerService customerServiceBean;
 
+    /** The servlet context. */
     @Inject
     protected ServletContext servletContext;
     
+    /**
+     * Gets the products.
+     *
+     * @return the products
+     */
     @GET        // get: get all products
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getProducts() {
@@ -58,6 +69,12 @@ public class ProductResource {
         return response;
     }
      
+    /**
+     * Gets the product by id.
+     *
+     * @param id the id
+     * @return the product by id
+     */
     @GET        // get{id} get a product by its id
     @Path(RESOURCE_PATH_ID_PATH)
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
@@ -74,6 +91,12 @@ public class ProductResource {
         return response;
     }
     
+    /**
+     * Deletet product.
+     *
+     * @param id the id
+     * @return the response
+     */
     @DELETE     // delete{id} delete a product by its id
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
@@ -88,6 +111,12 @@ public class ProductResource {
         }
     }
     
+    /**
+     * Adds the product.
+     *
+     * @param newProduct the new product
+     * @return the response
+     */
     @POST       // post --  Add a new product
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
@@ -99,6 +128,13 @@ public class ProductResource {
     }
     
     
+    /**
+     * Update product.
+     *
+     * @param id the id
+     * @param updatedCustomer the updated customer
+     * @return the response
+     */
     @PUT        // put{id}  Modify product by its id
     @Transactional
     @RolesAllowed({ADMIN_ROLE})

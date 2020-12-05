@@ -24,31 +24,55 @@ import javax.persistence.Table;
 import com.algonquincollege.cst8277.rest.ProductSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+// TODO: Auto-generated Javadoc
 /**
-*
-* Description: model for the Store object
-*/
+ * Description: model for the Store object.
+ */
 @Entity(name = "Stores")
 @Table(name = "STORES")
 @Access(AccessType.PROPERTY)
 @AttributeOverride(name = "id", column = @Column(name="STORE_ID"))
 public class StorePojo extends PojoBase implements Serializable {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
+    /** The store name. */
     protected String storeName;
+    
+    /** The products. */
     protected Set<ProductPojo> products = new HashSet<>();
 
+    /**
+     * Instantiates a new store pojo.
+     */
     // JPA requires each @Entity class have a default constructor
     public StorePojo() {
     }
 
+    /**
+     * Gets the store name.
+     *
+     * @return the store name
+     */
     public String getStoreName() {
         return storeName;
     }
+    
+    /**
+     * Sets the store name.
+     *
+     * @param storeName the new store name
+     */
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
     
+    /**
+     * Gets the products.
+     *
+     * @return the products
+     */
     @JsonSerialize(using = ProductSerializer.class)
       //Discovered what I think is a bug: you should be able to list them in any order,
       //but it turns out, EclipseLink's JPA implementation needs the @JoinColumn StorePojo's PK
@@ -57,6 +81,12 @@ public class StorePojo extends PojoBase implements Serializable {
     public Set<ProductPojo> getProducts() {
         return products;
     }
+    
+    /**
+     * Sets the products.
+     *
+     * @param products the new products
+     */
     public void setProducts(Set<ProductPojo> products) {
         this.products = products;
     }

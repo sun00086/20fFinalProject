@@ -16,19 +16,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConfigureJacksonObjectMapper.
+ */
 @Provider
 public class ConfigureJacksonObjectMapper implements ContextResolver<ObjectMapper> {
+    
+    /** The object mapper. */
     private final ObjectMapper objectMapper;
 
+    /**
+     * Instantiates a new configure jackson object mapper.
+     */
     public ConfigureJacksonObjectMapper() {
         this.objectMapper = createObjectMapper();
     }
 
+    /* (non-Javadoc)
+     * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
+     */
     @Override
     public ObjectMapper getContext(Class<?> type) {
         return objectMapper;
     }
 
+    /**
+     * Creates the object mapper.
+     *
+     * @return the object mapper
+     */
     //configure JDK 8's new DateTime objects to use proper ISO-8601 timeformat
     protected ObjectMapper createObjectMapper() {
         ObjectMapper mapper = new ObjectMapper()

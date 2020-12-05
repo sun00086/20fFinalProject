@@ -27,19 +27,27 @@ import org.glassfish.soteria.WrappingCallerPrincipal;
 
 import com.algonquincollege.cst8277.models.SecurityUser;
 
+// TODO: Auto-generated Javadoc
 /**
- * Descript: REST endpoint class to test authorization/authentication
+ * Descript: REST endpoint class to test authorization/authentication.
  */
 @Path(CREDENTIAL_RESOURCE_NAME)
 @Produces(MediaType.APPLICATION_JSON)
 public class CredentialResource {
 
+    /** The servlet context. */
     @Inject
     protected ServletContext servletContext;
 
+    /** The security content. */
     @Inject
     protected SecurityContext securityContent;
 
+    /**
+     * Gets the credentials.
+     *
+     * @return the credentials
+     */
     @GET
     public Response getCredentials() {
         servletContext.log("testing credentials ...");

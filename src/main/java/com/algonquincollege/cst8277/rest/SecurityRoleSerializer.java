@@ -17,17 +17,34 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SecurityRoleSerializer.
+ */
 public class SecurityRoleSerializer extends StdSerializer<Set<SecurityRole>> implements Serializable {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new security role serializer.
+     */
     public SecurityRoleSerializer() {
         this(null);
     }
 
+    /**
+     * Instantiates a new security role serializer.
+     *
+     * @param t the t
+     */
     public SecurityRoleSerializer(Class<Set<SecurityRole>> t) {
         super(t);
     }
 
+    /* (non-Javadoc)
+     * @see com.fasterxml.jackson.databind.ser.std.StdSerializer#serialize(java.lang.Object, com.fasterxml.jackson.core.JsonGenerator, com.fasterxml.jackson.databind.SerializerProvider)
+     */
     @Override
     public void serialize(Set<SecurityRole> originalRoles, JsonGenerator generator, SerializerProvider provider)
         throws IOException {

@@ -19,6 +19,10 @@ import javax.annotation.security.DeclareRoles;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RestConfig.
+ */
 @ApplicationPath(APPLICATION_API_VERSION)
 //this used to be in web.xml
 @DeclareRoles({USER_ROLE, ADMIN_ROLE})
@@ -32,6 +36,9 @@ public class RestConfig extends Application {
      * (but much more popular!) package called 'Jackson'
      */
     
+    /* (non-Javadoc)
+     * @see javax.ws.rs.core.Application#getProperties()
+     */
     @Override
     public Map<String, Object> getProperties() {
         Map<String, Object> props = new HashMap<>();

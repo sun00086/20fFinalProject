@@ -37,6 +37,7 @@ import com.algonquincollege.cst8277.models.SecurityRole;
 import com.algonquincollege.cst8277.models.SecurityUser;
 import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
 
+// TODO: Auto-generated Javadoc
 /**
  * This Stateless Session bean is 'special' because it is also a Singleton and
  * it runs at startup.
@@ -53,12 +54,17 @@ import com.algonquincollege.cst8277.security.CustomIdentityStoreJPAHelper;
 @Singleton
 public class BuildSecurityRolesAndUsers {
 
+    /** The jpa helper. */
     @Inject
     protected CustomIdentityStoreJPAHelper jpaHelper;
 
+    /** The pb andj password hash. */
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
+    /**
+     * Inits the.
+     */
     @PostConstruct
     public void init() {
         // build default admin user (if needed)

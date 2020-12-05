@@ -25,27 +25,39 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+// TODO: Auto-generated Javadoc
 /**
-*
-* Description: model for the Product object
-*/
+ * Description: model for the Product object.
+ */
 
 @Entity(name = "Product")
 @Table(name = "PRODUCT")
 @Access(AccessType.PROPERTY)
 @AttributeOverride(name = "id", column = @Column(name="PRODUCT_ID"))
 public class ProductPojo extends PojoBase implements Serializable {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The description. */
     protected String description;
+    
+    /** The serial no. */
     protected String serialNo;
+    
+    /** The stores. */
     protected Set<StorePojo> stores = new HashSet<>();
 
+    /**
+     * Instantiates a new product pojo.
+     */
     // JPA requires each @Entity class have a default constructor
     public ProductPojo() {
     }
     
     /**
+     * Gets the description.
+     *
      * @return the value for firstName
      */
     
@@ -53,20 +65,40 @@ public class ProductPojo extends PojoBase implements Serializable {
     public String getDescription() {
         return description;
     }
+    
     /**
+     * Sets the description.
+     *
      * @param description new value for description
      */
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    /**
+     * Gets the serial no.
+     *
+     * @return the serial no
+     */
     @Column(name="SERIALNUMBER")
     public String getSerialNo() {
         return serialNo;
     }
+    
+    /**
+     * Sets the serial no.
+     *
+     * @param serialNo the new serial no
+     */
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
     }
     
+    /**
+     * Gets the stores.
+     *
+     * @return the stores
+     */
     @JsonInclude(Include.NON_NULL)
     @ManyToMany
     @JoinTable(name="STORES_PRODUCTS",
@@ -75,6 +107,12 @@ public class ProductPojo extends PojoBase implements Serializable {
     public Set<StorePojo> getStores() {
         return stores;
     }
+    
+    /**
+     * Sets the stores.
+     *
+     * @param stores the new stores
+     */
     public void setStores(Set<StorePojo> stores) {
         this.stores = stores;
     }

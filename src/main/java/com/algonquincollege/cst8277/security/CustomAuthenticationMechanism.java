@@ -28,15 +28,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CustomAuthenticationMechanism.
+ */
 @ApplicationScoped
 public class CustomAuthenticationMechanism implements HttpAuthenticationMechanism {
 
+    /** The identity store. */
     @Inject
     protected IdentityStore identityStore;
 
+    /** The servlet context. */
     @Context
     protected ServletContext servletContext;
 
+    /* (non-Javadoc)
+     * @see javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism#validateRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.enterprise.authentication.mechanism.http.HttpMessageContext)
+     */
     @Override
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthenticationException {
 

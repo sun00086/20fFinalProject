@@ -59,28 +59,45 @@ import com.algonquincollege.cst8277.models.ShippingAddressPojo;
 import com.algonquincollege.cst8277.models.StorePojo;
 import com.algonquincollege.cst8277.models.StorePojo_;
 
+// TODO: Auto-generated Javadoc
 /**
- * Stateless Singleton Session Bean - CustomerService
+ * Stateless Singleton Session Bean - CustomerService.
  */
 @Singleton
 public class CustomerService implements Serializable {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
+    /** The Constant CUSTOMER_PU. */
     public static final String CUSTOMER_PU = "20f-groupProject-PU";
 
+    /** The em. */
     @PersistenceContext(name = CUSTOMER_PU)
     protected EntityManager em;
 
+    /** The pb andj password hash. */
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
     
     //TODO
-//--------------------------------------------------------------------------------------------------------------
+/**
+     * Gets the all customers.
+     *
+     * @return the all customers
+     */
+    //--------------------------------------------------------------------------------------------------------------
     public List<CustomerPojo> getAllCustomers() {
         //changed
         return em.createNamedQuery(ALL_CUSTOMERS_QUERY_NAME, CustomerPojo.class).getResultList();
     }
 
+    /**
+     * Gets the customer by id.
+     *
+     * @param custPK the cust PK
+     * @return the customer by id
+     */
     public CustomerPojo getCustomerById(int custPK) {    //changed
         CustomerPojo cust = null;
         try {
@@ -95,6 +112,12 @@ public class CustomerService implements Serializable {
        
     }
     
+    /**
+     * Persist customer.
+     *
+     * @param newCustomer the new customer
+     * @return the customer pojo
+     */
     @Transactional
     public CustomerPojo persistCustomer(CustomerPojo newCustomer) {
         em.persist(newCustomer);
@@ -103,9 +126,10 @@ public class CustomerService implements Serializable {
     }
     
     /**
-     * update customer
-     * @param id
-     * @param updatedcustomer
+     * update customer.
+     *
+     * @param id the id
+     * @param updatedcustomer the updatedcustomer
      */
     @Transactional
     public void updateCustomerById(int id, CustomerPojo updatedcustomer) {
@@ -122,6 +146,11 @@ public class CustomerService implements Serializable {
         }
     }
     
+    /**
+     * Delete customer by id.
+     *
+     * @param id the id
+     */
     @Transactional
     public void deleteCustomerById(int id) {
         CustomerPojo cust = em.find(CustomerPojo.class, id);
@@ -135,6 +164,11 @@ public class CustomerService implements Serializable {
         }
     }
     
+  /**
+   * Builds the user for new customer.
+   *
+   * @param newCustomerWithIdTimestamps the new customer with id timestamps
+   */
   //--------------------------------------------------------------------------------------------------------------
     @Transactional
     public void buildUserForNewCustomer(CustomerPojo newCustomerWithIdTimestamps) {
@@ -156,6 +190,13 @@ public class CustomerService implements Serializable {
         em.persist(userForNewCustomer);
     }
 
+    /**
+     * Sets the address for.
+     *
+     * @param custId the cust id
+     * @param newAddress the new address
+     * @return the customer pojo
+     */
     @Transactional
     public CustomerPojo setAddressFor(int custId, AddressPojo newAddress) {
         CustomerPojo updatedCustomer = em.find(CustomerPojo.class, custId);
@@ -171,6 +212,11 @@ public class CustomerService implements Serializable {
 
     
     
+    /**
+     * Gets the all products.
+     *
+     * @return the all products
+     */
     //---------------------------------------------------------------------------------------------------------------------------
     public List<ProductPojo> getAllProducts() {
         //example of using JPA Criteria query instead of JPQL
@@ -188,6 +234,12 @@ public class CustomerService implements Serializable {
         }
     }
 
+    /**
+     * Gets the product by id.
+     *
+     * @param prodId the prod id
+     * @return the product by id
+     */
     public ProductPojo getProductById(int prodId) {
         ProductPojo product = null;
         try {
@@ -209,6 +261,12 @@ public class CustomerService implements Serializable {
         }
     }
     
+    /**
+     * Delete product.
+     *
+     * @param custId the cust id
+     * @return true, if successful
+     */
     @Transactional
     public boolean deleteProduct(int custId) {
         ProductPojo cust = em.find(ProductPojo.class, custId);
@@ -226,6 +284,13 @@ public class CustomerService implements Serializable {
             return delete;
         }
     }
+    
+    /**
+     * Update product by id.
+     *
+     * @param id the id
+     * @param updatedcustomer the updatedcustomer
+     */
     @Transactional
     public void updateProductById(int id, ProductPojo updatedcustomer) {
         ProductPojo cust = em.find(ProductPojo.class, id);
@@ -236,6 +301,12 @@ public class CustomerService implements Serializable {
         }
     }
     
+    /**
+     * Persist product.
+     *
+     * @param newCustomer the new customer
+     * @return the product pojo
+     */
     @Transactional
     public ProductPojo persistProduct(ProductPojo newCustomer) {
         em.persist(newCustomer);
@@ -245,7 +316,12 @@ public class CustomerService implements Serializable {
     
   //---------------------------------------------------------------------------------------------------------------------------
     
-    public List<StorePojo> getAllStores() {
+    /**
+   * Gets the all stores.
+   *
+   * @return the all stores
+   */
+  public List<StorePojo> getAllStores() {
         try {
 //            CriteriaBuilder cb = em.getCriteriaBuilder();
 //            CriteriaQuery<StorePojo> q = cb.createQuery(StorePojo.class);
@@ -262,6 +338,12 @@ public class CustomerService implements Serializable {
         }
     }
 
+    /**
+     * Gets the store by id.
+     *
+     * @param id the id
+     * @return the store by id
+     */
     public StorePojo getStoreById(int id) {
         StorePojo store = null;
         try {
@@ -282,6 +364,13 @@ public class CustomerService implements Serializable {
             return null;
         }
     }
+    
+    /**
+     * Delete store.
+     *
+     * @param custId the cust id
+     * @return true, if successful
+     */
     @Transactional
     public boolean deleteStore(int custId) {
         StorePojo cust = em.find(StorePojo.class, custId);
@@ -299,6 +388,13 @@ public class CustomerService implements Serializable {
             return delete;
         }
     }
+    
+    /**
+     * Update store by id.
+     *
+     * @param id the id
+     * @param updatedcustomer the updatedcustomer
+     */
     @Transactional
     public void updateStoreById(int id, StorePojo updatedcustomer) {
         StorePojo cust = em.find(StorePojo.class, id);
@@ -308,6 +404,12 @@ public class CustomerService implements Serializable {
         }
     }
     
+    /**
+     * Persist store.
+     *
+     * @param newCustomer the new customer
+     * @return the store pojo
+     */
     @Transactional
     public StorePojo persistStore(StorePojo newCustomer) {
         em.persist(newCustomer);
@@ -316,6 +418,11 @@ public class CustomerService implements Serializable {
     }
     
     //---------------------------------------------------------------------------------------------------------
+    /**
+     * Gets the all orders.
+     *
+     * @return the all orders
+     */
     /*
     
     public OrderPojo getAllOrders ... getOrderbyId ... build Orders with OrderLines ...
@@ -335,6 +442,13 @@ public class CustomerService implements Serializable {
             return null;
         }
     }
+    
+    /**
+     * Gets the order by id.
+     *
+     * @param orderId the order id
+     * @return the order by id
+     */
     public OrderPojo getOrderById(int orderId) {
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -350,6 +464,13 @@ public class CustomerService implements Serializable {
             return null;
         }
     }
+    
+    /**
+     * Persist order.
+     *
+     * @param newCustomer the new customer
+     * @return the order pojo
+     */
     @Transactional
     public OrderPojo persistOrder(OrderPojo newCustomer) {
         em.persist(newCustomer);
@@ -357,6 +478,12 @@ public class CustomerService implements Serializable {
         return newCustomer;
     }
     
+    /**
+     * Delete order by id.
+     *
+     * @param custId the cust id
+     * @return true, if successful
+     */
     @Transactional
     public boolean deleteOrderById(int custId) {
         OrderPojo cust = em.find(OrderPojo.class, custId);
@@ -374,6 +501,13 @@ public class CustomerService implements Serializable {
             return delete;
         }
     }
+    
+    /**
+     * Update order by id.
+     *
+     * @param id the id
+     * @param updatedcustomer the updatedcustomer
+     */
     @Transactional
     public void updateOrderById(int id, OrderPojo updatedcustomer) {
         OrderPojo cust = em.find(OrderPojo.class, id);
@@ -385,6 +519,13 @@ public class CustomerService implements Serializable {
     
     
     
+    /**
+     * Persist customer order.
+     *
+     * @param id the id
+     * @param newOrder the new order
+     * @return the customer pojo
+     */
     //--------------------------------------------------------------------------------------------------------
     @Transactional
     public CustomerPojo persistCustomerOrder(int id, OrderPojo newOrder) {
@@ -397,11 +538,26 @@ public class CustomerService implements Serializable {
         }
         return cust;
     }
+    
+    /**
+     * Gets the customer all orders.
+     *
+     * @param id the id
+     * @return the customer all orders
+     */
     @Transactional
     public List<OrderPojo> getCustomerAllOrders(int id) {
         CustomerPojo cust = em.find(CustomerPojo.class, id);
         return cust.getOrders();
     }
+    
+    /**
+     * Gets the customer order by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the customer order by id
+     */
     @Transactional
     public OrderPojo getCustomerOrderById (int id, int orderid) {
         CustomerPojo cust = em.find(CustomerPojo.class, id);
@@ -411,6 +567,15 @@ public class CustomerService implements Serializable {
             return order;
         return null;
     }
+    
+    /**
+     * Update customer order by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @param neworder the neworder
+     * @return the order pojo
+     */
     @Transactional
     public OrderPojo updateCustomerOrderById(int id, int orderid, OrderPojo neworder) {
         OrderPojo order = getCustomerOrderById (id,orderid);
@@ -421,6 +586,13 @@ public class CustomerService implements Serializable {
         return order;
     }
     
+    /**
+     * Delete customer order by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the order pojo
+     */
     @Transactional
     public OrderPojo deleteCustomerOrderById(int id, int orderid) {
         OrderPojo order = getCustomerOrderById (id,orderid);
@@ -432,6 +604,13 @@ public class CustomerService implements Serializable {
     }
     //---------------------------------------------------------------------------------------------------------
     
+    /**
+     * Gets the customer order line by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the customer order line by id
+     */
     @Transactional
     public List<OrderLinePojo> getCustomerOrderLineById(int id, int orderid) {
         OrderPojo order = getCustomerOrderById (id,orderid);
@@ -440,6 +619,14 @@ public class CustomerService implements Serializable {
         return line;
     }
     
+    /**
+     * Persist order line.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @param line the line
+     * @return the order pojo
+     */
     @Transactional
     public OrderPojo persistOrderLine(int id, int orderid, OrderLinePojo line) {
         

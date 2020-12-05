@@ -64,25 +64,49 @@ import com.algonquincollege.cst8277.models.ProductPojo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OrderSystemTestSuite.
+ */
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class OrderSystemTestSuite {
+    
+    /** The Constant _thisClaz. */
     private static final Class<?> _thisClaz = MethodHandles.lookup().lookupClass();
+    
+    /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(_thisClaz);
 
+    /** The Constant APPLICATION_CONTEXT_ROOT. */
     static final String APPLICATION_CONTEXT_ROOT = "rest-orderSystem";
+    
+    /** The Constant HTTP_SCHEMA. */
     static final String HTTP_SCHEMA = "http";
+    
+    /** The Constant HOST. */
     static final String HOST = "localhost";
     
     //TODO - if you changed your Payara's default port (to say for example 9090)
     //       your may need to alter this constant
-//    static final int PORT = 9090;
+/** The Constant PORT. */
+    //    static final int PORT = 9090;
     static final int PORT = 8080;
 
+    /** The uri. */
     // test fixture(s)
     static URI uri;
+    
+    /** The admin auth. */
     static HttpAuthenticationFeature adminAuth;
+    
+    /** The user auth. */
     static HttpAuthenticationFeature userAuth;
 
+    /**
+     * One time set up.
+     *
+     * @throws Exception the exception
+     */
     @BeforeAll
     public static void oneTimeSetUp() throws Exception {
         logger.debug("oneTimeSetUp");
@@ -98,7 +122,12 @@ public class OrderSystemTestSuite {
         userAuth = HttpAuthenticationFeature.basic(DEFAULT_USER_PREFIX, DEFAULT_USER_PASSWORD);
     }
 
+    /** The web target. */
     protected WebTarget webTarget;
+    
+    /**
+     * Sets the up.
+     */
     @BeforeEach
     public void setUp() {
         Client client = ClientBuilder.newClient(
@@ -106,6 +135,12 @@ public class OrderSystemTestSuite {
         webTarget = client.target(uri);
     }
 
+/**
+ * Test 01 all customers with adminrole.
+ *
+ * @throws JsonMappingException the json mapping exception
+ * @throws JsonProcessingException the json processing exception
+ */
 //    @Test
     public void test01_all_customers_with_adminrole() throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
@@ -125,6 +160,12 @@ public class OrderSystemTestSuite {
     // to REST'ful endpoints for the OrderSystem entities using the JAX-RS
     // ClientBuilder APIs
 
+    /**
+     * Test 02 customer by id with adminrole.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test02_customer_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
             .register(adminAuth)
@@ -138,6 +179,12 @@ public class OrderSystemTestSuite {
         
     }
     
+    /**
+     * Test 03 create customer admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test03_create_customer_admin()  throws JsonMappingException, JsonProcessingException{
         CustomerPojo custs = new CustomerPojo();
         custs.setFirstName("lee");
@@ -155,6 +202,12 @@ public class OrderSystemTestSuite {
        
     }
 
+    /**
+     * Test 04 update customer with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test04_update_customer_with_admin()throws JsonMappingException, JsonProcessingException {
         CustomerPojo custs = new CustomerPojo();
         custs.setFirstName("lee2");
@@ -182,6 +235,12 @@ public class OrderSystemTestSuite {
         assertEquals("uu3@gamil.com",custs3.getEmail());
     }
     
+    /**
+     * Test 05 delete customer with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test05_delete_customer_with_admin() throws JsonMappingException, JsonProcessingException{
         CustomerPojo custs = new CustomerPojo();
         custs.setFirstName("lee21");
@@ -208,6 +267,12 @@ public class OrderSystemTestSuite {
         assertEquals("lee21", custs4.getFirstName());
     }
     
+    /**
+     * Test 06 create order admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test06_create_order_admin()  throws JsonMappingException, JsonProcessingException{
         OrderPojo or = new OrderPojo();
         or.setDescription("one");
@@ -221,6 +286,13 @@ public class OrderSystemTestSuite {
         assertEquals("one",or2.getDescription());
        
     }
+    
+    /**
+     * Test 07 order by id with adminrole.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test07_order_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
             .register(adminAuth)
@@ -234,6 +306,12 @@ public class OrderSystemTestSuite {
         
     }
 
+    /**
+     * Test 08 update order with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test08_update_order_with_admin()throws JsonMappingException, JsonProcessingException {
         OrderPojo or = new OrderPojo();
         or.setDescription("two");
@@ -255,6 +333,13 @@ public class OrderSystemTestSuite {
         OrderPojo  or3 = response.readEntity(new GenericType< OrderPojo >(){});
         assertEquals("change two",or3.getDescription());
     }
+    
+    /**
+     * Test 09 delete customer with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test09_delete_customer_with_admin() throws JsonMappingException, JsonProcessingException{
         OrderPojo or = new OrderPojo();
      
@@ -279,6 +364,12 @@ public class OrderSystemTestSuite {
         assertEquals("three", or3.getDescription());
     }
     
+    /**
+     * Test 10 create address admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test10_create_address_admin()  throws JsonMappingException, JsonProcessingException{
         BillingAddressPojo bs = new BillingAddressPojo();
         bs.setCity("ottawa");
@@ -296,6 +387,13 @@ public class OrderSystemTestSuite {
         assertEquals("ottawa",bs2.getCity());
        
     }
+    
+    /**
+     * Test 11 address by id with adminrole.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test11_address_by_id_with_adminrole()throws JsonMappingException, JsonProcessingException {
         Response response = webTarget
             .register(adminAuth)
@@ -309,6 +407,12 @@ public class OrderSystemTestSuite {
         
     }
     
+    /**
+     * Test 12 update address with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test12_update_address_with_admin()throws JsonMappingException, JsonProcessingException {
         BillingAddressPojo bs = new BillingAddressPojo();
      
@@ -337,6 +441,12 @@ public class OrderSystemTestSuite {
         assertEquals("salt city",bs3.getCity());
     }
 
+    /**
+     * Test 13 delete address with admin.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     public void test13_delete_address_with_admin() throws JsonMappingException, JsonProcessingException{
 
         BillingAddressPojo bs = new BillingAddressPojo();
@@ -370,57 +480,114 @@ public class OrderSystemTestSuite {
     
    
 
+    /**
+     * Test 14 something.
+     */
     public void test14_something() {
     }
     
+    /**
+     * Test 15 something.
+     */
     public void test15_something() {
     }
 
+    /**
+     * Test 16 something.
+     */
     public void test16_something() {
     }
     
+    /**
+     * Test 17 something.
+     */
     public void test17_something() {
     }
 
+    /**
+     * Test 18 something.
+     */
     public void test18_something() {
     }
     
+    /**
+     * Test 19 something.
+     */
     public void test19_something() {
     }
     
+    /**
+     * Test 20 something.
+     */
     public void test20_something() {
     }
 
+    /**
+     * Test 21 something.
+     */
     public void test21_something() {
     }
 
+    /**
+     * Test 22 something.
+     */
     public void test22_something() {
     }
     
+    /**
+     * Test 23 something.
+     */
     public void test23_something() {
     }
 
+    /**
+     * Test 24 something.
+     */
     public void test24_something() {
     }
     
+    /**
+     * Test 25 something.
+     */
     public void test25_something() {
     }
 
+    /**
+     * Test 26 something.
+     */
     public void test26_something() {
     }
     
+    /**
+     * Test 27 something.
+     */
     public void test27_something() {
     }
 
+    /**
+     * Test 28 something.
+     */
     public void test28_something() {
     }
     
+    /**
+     * Test 29 something.
+     */
     public void test29_something() {
     }
     
+    /**
+     * Test 30 something.
+     */
     public void test30_something() {
     }
 
+    /**
+     * Test 31 create product with admin role.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test31_create_product_with_adminRole () throws JsonMappingException, JsonProcessingException{
         ProductPojo pp = new ProductPojo();
@@ -434,6 +601,12 @@ public class OrderSystemTestSuite {
         assertThat(response.getStatus(), is(200));
     }
 
+    /**
+     * Test 32 create product with user role.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test32_create_product_with_userRole() throws JsonMappingException, JsonProcessingException {
         ProductPojo pp = new ProductPojo();
@@ -447,6 +620,12 @@ public class OrderSystemTestSuite {
         assertThat(response.getStatus(), is(401));
     }
     
+    /**
+     * Test 33 admin get product by ID.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test33_admin_get_product_by_ID() throws JsonMappingException, JsonProcessingException{
         Response response = webTarget
@@ -462,6 +641,12 @@ public class OrderSystemTestSuite {
 
     }
 
+    /**
+     * Test 34 user get product by ID.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test34_user_get_product_by_ID() throws JsonMappingException, JsonProcessingException{
         Response response = webTarget
@@ -473,6 +658,12 @@ public class OrderSystemTestSuite {
         assertThat(response.getStatus(), is(401));
     }
     
+    /**
+     * Test 35 admin get all product.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test35_admin_get_all_product() throws JsonMappingException, JsonProcessingException{
         Response response = webTarget
@@ -487,6 +678,12 @@ public class OrderSystemTestSuite {
         assertThat(custs, hasSize(1));
     }
 
+    /**
+     * Test 36 user get all product.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test36_user_get_all_product() throws JsonMappingException, JsonProcessingException{
         Response response = webTarget
@@ -501,6 +698,12 @@ public class OrderSystemTestSuite {
         assertThat(custs, hasSize(1));
     }
     
+    /**
+     * Test 37 admin update product.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test37_admin_update_product() throws JsonMappingException, JsonProcessingException{
         ProductPojo prods = new ProductPojo();
@@ -518,6 +721,12 @@ public class OrderSystemTestSuite {
         
     }
 
+    /**
+     * Test 38 user update product.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test38_user_update_product() throws JsonMappingException, JsonProcessingException{
         ProductPojo prods = new ProductPojo();
@@ -534,6 +743,12 @@ public class OrderSystemTestSuite {
         assertThat(updateProd.getDescription(), is("updateProduct"));
     }
     
+    /**
+     * Test 39 delete product.
+     *
+     * @throws JsonMappingException the json mapping exception
+     * @throws JsonProcessingException the json processing exception
+     */
     @Test
     public void test39_delete_product() throws JsonMappingException, JsonProcessingException{
         Response response = webTarget

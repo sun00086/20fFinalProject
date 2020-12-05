@@ -25,9 +25,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+// TODO: Auto-generated Javadoc
 /**
-*
-* Description: model for the Address object
+ * Description: model for the Address object.
  */
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
@@ -47,60 +47,122 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @DiscriminatorColumn(name = "ADDR_TYPE", length=1)
 public abstract class AddressPojo extends PojoBase implements Serializable {
 
-    /** explicit set serialVersionUID */
+    /**  explicit set serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The street. */
     protected String street;
+    
+    /** The city. */
     protected String city;
+    
+    /** The country. */
     protected String country;
+    
+    /** The postal. */
     protected String postal;
+    
+    /** The state. */
     protected String state;
 
     /**
-     * JPA requires each @Entity class have a default constructor
+     * JPA requires each @Entity class have a default constructor.
      */
     public AddressPojo() {
         super();
     }
+    
+    /**
+     * Gets the city.
+     *
+     * @return the city
+     */
     @Column(name = "CITY")
     public String getCity() {
         return city;
     }
     
+    /**
+     * Sets the city.
+     *
+     * @param city the new city
+     */
     public void setCity(String city) {
         this.city = city;
     }
     
+    /**
+     * Gets the country.
+     *
+     * @return the country
+     */
     @Column(name = "COUNTRY")
     public String getCountry() {
         return country;
     }
     
+    /**
+     * Sets the country.
+     *
+     * @param country the new country
+     */
     public void setCountry(String country) {
         this.country = country;
     }
     
+    /**
+     * Gets the postal.
+     *
+     * @return the postal
+     */
     @Column(name = "POSTAL_CODE")
     public String getPostal() {
         return postal;
     }
+    
+    /**
+     * Sets the postal.
+     *
+     * @param postal the new postal
+     */
     public void setPostal(String postal) {
         this.postal = postal;
     }
 
+    /**
+     * Gets the state.
+     *
+     * @return the state
+     */
     @Column(name = "STATE")
     public String getState() {
         return state;
     }
     
+    /**
+     * Sets the state.
+     *
+     * @param state the new state
+     */
     public void setState(String state) {
         this.state = state;
     }
     
+    /**
+     * Gets the street.
+     *
+     * @return the street
+     */
     @Column(name = "STREET")
     public String getStreet() {
         return street;
     }
+    
+    /**
+     * Sets the street.
+     *
+     * @param street the new street
+     */
     public void setStreet(String street) {
         this.street = street;
     }

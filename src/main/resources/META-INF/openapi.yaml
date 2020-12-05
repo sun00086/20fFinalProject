@@ -196,7 +196,7 @@ components:
                 $ref: "#/components/schemas/PojoBase"
             }]
             properties: {
-                amount: {type: number, description: "Amount", example: 580.00},
+                amount: {type: number, description: "Amount", example: 500.00},
                 product: {$ref: '#/components/schemas/Product'}
             }
 
@@ -843,7 +843,7 @@ paths:
                 $ref: "#/components/parameters/orderidPathParam"
             }]
             requestBody: {
-                description: "new store to be added to Db",
+                description: "Add order line",
                 required: true,
                 content: {
                     application/json: {

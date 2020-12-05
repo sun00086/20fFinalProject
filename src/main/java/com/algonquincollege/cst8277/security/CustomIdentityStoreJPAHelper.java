@@ -25,18 +25,30 @@ import javax.transaction.Transactional;
 import com.algonquincollege.cst8277.models.SecurityRole;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CustomIdentityStoreJPAHelper.
+ */
 /*
  * Stateless Session bean should also be a Singleton
  */
 @Singleton
 public class CustomIdentityStoreJPAHelper {
 
+    /** The Constant CUSTOMER_PU. */
     public static final String CUSTOMER_PU = "20f-groupProject-PU";
 
+    /** The em. */
     @PersistenceContext(name = CUSTOMER_PU)
     
     protected EntityManager em;
 
+    /**
+     * Find user by name.
+     *
+     * @param username the username
+     * @return the security user
+     */
     public SecurityUser findUserByName(String username) {
         SecurityUser user = null;
         try {
@@ -51,6 +63,12 @@ public class CustomIdentityStoreJPAHelper {
         return user;
     }
 
+    /**
+     * Find role names for user.
+     *
+     * @param username the username
+     * @return the sets the
+     */
     public Set<String> findRoleNamesForUser(String username) {
         Set<String> roleNames = emptySet();
         SecurityUser securityUser = findUserByName(username);
@@ -61,6 +79,11 @@ public class CustomIdentityStoreJPAHelper {
         return roleNames;
     }
 
+    /**
+     * Save security user.
+     *
+     * @param user the user
+     */
     @Transactional
     public void saveSecurityUser(SecurityUser user) {
         //TODO
@@ -72,6 +95,11 @@ public class CustomIdentityStoreJPAHelper {
         em.persist(user);
     }
 
+    /**
+     * Save security role.
+     *
+     * @param role the role
+     */
     @Transactional
     public void saveSecurityRole(SecurityRole role) {
         //TODO

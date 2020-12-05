@@ -38,17 +38,28 @@ import com.algonquincollege.cst8277.ejb.CustomerService;
 //import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.StorePojo;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StoreResource.
+ */
 @Path(STORE_RESOURCE_NAME)       // /store:
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class StoreResource {
 
+    /** The customer service bean. */
     @EJB
     protected CustomerService customerServiceBean;
 
+    /** The servlet context. */
     @Inject
     protected ServletContext servletContext;
 
+    /**
+     * Gets the stores.
+     *
+     * @return the stores
+     */
     @GET            // GET /store  Retrieve all stores
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getStores() {
@@ -64,6 +75,12 @@ public class StoreResource {
         return response;
     }
     
+    /**
+     * Gets the store by id.
+     *
+     * @param id the id
+     * @return the store by id
+     */
     @GET            //GET /store{id}  Retrieve a store by its id
     @Path(RESOURCE_PATH_ID_PATH)
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
@@ -78,6 +95,13 @@ public class StoreResource {
            }
             return response;
         }
+    
+    /**
+     * Deletet store.
+     *
+     * @param id the id
+     * @return the response
+     */
     @DELETE         // DELETE /store{id}  Delete a store by its id
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)
@@ -91,6 +115,12 @@ public class StoreResource {
         }
     }
   
+    /**
+     * Adds the store.
+     *
+     * @param newStore the new store
+     * @return the response
+     */
     @POST           // POST /store  Add a new store
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
@@ -101,6 +131,13 @@ public class StoreResource {
       return response;
     }
   
+    /**
+     * Update store.
+     *
+     * @param id the id
+     * @param updatedCustomer the updated customer
+     * @return the response
+     */
     @PUT            // PUT /store{id}  Modified a store by its id
     @Transactional
     @RolesAllowed({ADMIN_ROLE})

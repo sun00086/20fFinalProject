@@ -28,16 +28,25 @@ import org.glassfish.soteria.WrappingCallerPrincipal;
 import com.algonquincollege.cst8277.models.SecurityRole;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CustomIdentityStore.
+ */
 @ApplicationScoped
 @Default
 public class CustomIdentityStore implements IdentityStore {
 
+    /** The jpa helper. */
     @Inject
     protected CustomIdentityStoreJPAHelper jpaHelper;
 
+    /** The pb andj password hash. */
     @Inject
     protected Pbkdf2PasswordHash pbAndjPasswordHash;
 
+    /* (non-Javadoc)
+     * @see javax.security.enterprise.identitystore.IdentityStore#validate(javax.security.enterprise.credential.Credential)
+     */
     @Override
     public CredentialValidationResult validate(Credential credential) {
 
@@ -89,6 +98,12 @@ public class CustomIdentityStore implements IdentityStore {
         return result;
     }
 
+    /**
+     * Gets the roles names for security roles.
+     *
+     * @param roles the roles
+     * @return the roles names for security roles
+     */
     protected Set<String> getRolesNamesForSecurityRoles(Set<SecurityRole> roles) {
         Set<String> roleNames = emptySet();
         if (!roles.isEmpty()) {

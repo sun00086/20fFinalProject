@@ -49,19 +49,32 @@ import com.algonquincollege.cst8277.models.ProductPojo;
 import com.algonquincollege.cst8277.models.OrderLinePojo;
 import com.algonquincollege.cst8277.models.SecurityUser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CustomerResource.
+ */
 @Path(CUSTOMER_RESOURCE_NAME) // "customer"
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
+    
+    /** The customer service bean. */
     @EJB
     protected CustomerService customerServiceBean;
 
+    /** The servlet context. */
     @Inject
     protected ServletContext servletContext;
 
+    /** The sc. */
     @Inject
     protected SecurityContext sc;
     
+    /**
+     * Gets the customers.
+     *
+     * @return the customers
+     */
     @GET        // # GET /customer
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     public Response getCustomers() {
@@ -71,6 +84,12 @@ public class CustomerResource {
         return response;
     }
     
+    /**
+     * Adds the customer.
+     *
+     * @param newCustomer the new customer
+     * @return the response
+     */
     @POST       // POST /custmer
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
@@ -83,6 +102,12 @@ public class CustomerResource {
       return response;
     }
 
+    /**
+     * Gets the customer by id.
+     *
+     * @param id the id
+     * @return the customer by id
+     */
     @GET       // GET /customer/{id}
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)                 //"/{" + RESOURCE_PATH_ID_ELEMENT + "}";
@@ -115,6 +140,12 @@ public class CustomerResource {
     
     
     
+    /**
+     * Delete customer.
+     *
+     * @param id the id
+     * @return the response
+     */
     @DELETE     //DELETE /customer/{id} Removes a customer by its id
     @RolesAllowed({ADMIN_ROLE})
     @Path(RESOURCE_PATH_ID_PATH)    // customer/{id}
@@ -126,6 +157,13 @@ public class CustomerResource {
     }
     
     
+    /**
+     * Update customer.
+     *
+     * @param id the id
+     * @param updatedCustomer the updated customer
+     * @return the response
+     */
     @PUT        //PUT /customer/{id} Modify a customer by its id
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
@@ -137,6 +175,13 @@ public class CustomerResource {
       return response;
     }
     
+    /**
+     * Adds the address for customer.
+     *
+     * @param id the id
+     * @param newAddress the new address
+     * @return the response
+     */
     @PUT       //PUT /customer/{id}/billingAddress -- add a customer address by its id
     @RolesAllowed({ADMIN_ROLE})
     @Transactional
@@ -152,7 +197,13 @@ public class CustomerResource {
    
     //TODO - endpoints for setting up Orders/OrderLines
 
-    @GET                  //custmer/{id}/order
+    /**
+   * Gets the orders.
+   *
+   * @param id the id
+   * @return the orders
+   */
+  @GET                  //custmer/{id}/order
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     @Path("/{id}/order")
     public Response getOrders(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
@@ -164,6 +215,13 @@ public class CustomerResource {
     
     
     
+    /**
+     * Adds the order.
+     *
+     * @param id the id
+     * @param newCustomer the new customer
+     * @return the response
+     */
     @POST                    //custmer/{id}/order
     @Transactional
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
@@ -178,17 +236,31 @@ public class CustomerResource {
     
 
     
-//    @GET
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}")
-//    public Response getOrderById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
-//      servletContext.log("try to retrieve specific product " + id);
-//      OrderPojo custs  = customerServiceBean.getCustomerOrderById(id,orderid);
-//      Response response = Response.ok(custs).build();
-//      return response;
-//    }
-//
-//
+    /**
+     * Gets the order by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the order by id
+     */
+    @GET
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}")
+    public Response getOrderById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid) {
+      servletContext.log("try to retrieve specific product " + id);
+      OrderPojo custs  = customerServiceBean.getCustomerOrderById(id,orderid);
+      Response response = Response.ok(custs).build();
+      return response;
+    }
+
+
+    /**
+     * Deletet order.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the response
+     */
     @DELETE
     @RolesAllowed({ADMIN_ROLE})
     @Path("/{id}/order/{orderid}")
@@ -200,6 +272,14 @@ public class CustomerResource {
     }
 
 
+    /**
+     * Update order.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @param order the order
+     * @return the response
+     */
     @Transactional
     @RolesAllowed({ADMIN_ROLE})
     @Path("/{id}/order/{orderid}")
@@ -212,6 +292,13 @@ public class CustomerResource {
     }
 
 
+    /**
+     * Gets the order line by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @return the order line by id
+     */
     @GET
     @RolesAllowed({ADMIN_ROLE})
     @Path("/{id}/order/{orderid}/orderline")
@@ -223,6 +310,14 @@ public class CustomerResource {
     }
 //
 //
+/**
+ * Adds the order line.
+ *
+ * @param id the id
+ * @param orderid the orderid
+ * @param line the line
+ * @return the response
+ */
 //
     @POST
     @Transactional
@@ -235,13 +330,21 @@ public class CustomerResource {
       return response;
     }
     
-//    @GET
-//    @RolesAllowed({ADMIN_ROLE})
-//    @Path("/{id}/order/{orderid}/orderline/{orderlineid}")
-//    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid , @PathParam("orderlineid") int orderlineid) {
-//      servletContext.log("try to retrieve specific product " + id);
-//      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid,orderlineid);
-//      Response response = Response.ok(custs).build();
-//      return response;
-//    }
+    /**
+     * Gets the order line by id.
+     *
+     * @param id the id
+     * @param orderid the orderid
+     * @param orderlineid the orderlineid
+     * @return the order line by id
+     */
+    @GET
+    @RolesAllowed({ADMIN_ROLE})
+    @Path("/{id}/order/{orderid}/orderline/{orderlineid}")
+    public Response getOrderLineById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id,@PathParam("orderid") int orderid , @PathParam("orderlineid") int orderlineid) {
+      servletContext.log("try to retrieve specific product " + id);
+      List<OrderLinePojo> custs  = customerServiceBean.getCustomerOrderLineById(id,orderid);
+      Response response = Response.ok(custs).build();
+      return response;
+    }
 }

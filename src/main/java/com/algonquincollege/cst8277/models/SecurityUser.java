@@ -36,57 +36,113 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+// TODO: Auto-generated Javadoc
 /**
- * User class used for (JSR-375) Java EE Security authorization/authentication
+ * User class used for (JSR-375) Java EE Security authorization/authentication.
  */
 @Entity(name="SecurityUser")
 @Table(name="SECURITY_USER")
 @Access(AccessType.PROPERTY)
 @NamedQuery(name= SECURITY_USER_BY_NAME_QUERY, query = "select su from SecurityUser su where su.username =:param1")
 public class SecurityUser implements Serializable, Principal {
-    /** explicit set serialVersionUID */
+    
+    /**  explicit set serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant USER_FOR_OWNING_CUST_QUERY. */
     public static final String USER_FOR_OWNING_CUST_QUERY =
         "userForOwningCust";
+    
+    /** The Constant SECURITY_USER_BY_NAME_QUERY. */
     public static final String SECURITY_USER_BY_NAME_QUERY =
         "userByName";
 
+    /** The id. */
     protected int id;
+    
+    /** The username. */
     protected String username;
+    
+    /** The pw hash. */
     protected String pwHash;
+    
+    /** The roles. */
     protected Set<SecurityRole> roles = new HashSet<>();
+    
+    /** The cust. */
     protected CustomerPojo cust;
 
+    /**
+     * Instantiates a new security user.
+     */
     public SecurityUser() {
         super();
     }
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
     public int getId() {
         return id;
     }
+    
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
     public void setId(int id) {
         this.id = id;
     }
+    
+    /**
+     * Gets the username.
+     *
+     * @return the username
+     */
     @Column(name="username")
     public String getUsername() {
         return username;
     }
+    
+    /**
+     * Sets the username.
+     *
+     * @param username the new username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets the pw hash.
+     *
+     * @return the pw hash
+     */
     @JsonIgnore
     public String getPwHash() {
         return pwHash;
     }
+    
+    /**
+     * Sets the pw hash.
+     *
+     * @param pwHash the new pw hash
+     */
     public void setPwHash(String pwHash) {
         this.pwHash = pwHash;
     }
     
+    /**
+     * Gets the roles.
+     *
+     * @return the roles
+     */
     @JsonInclude(Include.NON_NULL)
     @JsonSerialize(using = SecurityRoleSerializer.class)
     @ManyToMany(targetEntity = SecurityRole.class, cascade = CascadeType.PERSIST)
@@ -96,19 +152,39 @@ public class SecurityUser implements Serializable, Principal {
     public Set<SecurityRole> getRoles() {
         return roles;
     }
+    
+    /**
+     * Sets the roles.
+     *
+     * @param roles the new roles
+     */
     public void setRoles(Set<SecurityRole> roles) {
         this.roles = roles;
     }
 
+    /**
+     * Gets the customer.
+     *
+     * @return the customer
+     */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
     public CustomerPojo getCustomer() {
         return cust;
     }
+    
+    /**
+     * Sets the customer.
+     *
+     * @param cust the new customer
+     */
     public void setCustomer(CustomerPojo cust) {
         this.cust = cust;
     }
 
+    /* (non-Javadoc)
+     * @see java.security.Principal#getName()
+     */
     //Principal
     @JsonIgnore
     @Override
@@ -116,6 +192,9 @@ public class SecurityUser implements Serializable, Principal {
         return getUsername();
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -124,6 +203,9 @@ public class SecurityUser implements Serializable, Principal {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

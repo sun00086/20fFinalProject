@@ -14,20 +14,44 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 import org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PBKDF2HashGenerator.
+ */
 public class PBKDF2HashGenerator {
 
     // the nickname of this Hash algorithm is 'PBandJ' (Peanut-Butter-And-Jam, like the sandwich!)
     // I would like to use the constants from org.glassfish.soteria.identitystores.hash.Pbkdf2PasswordHashImpl
+    /** The Constant PROPERTY_ALGORITHM. */
     // but they are not visible, so type in them all over again :-( Hope there are no typos!
     public static final String PROPERTY_ALGORITHM  = "Pbkdf2PasswordHash.Algorithm";
+    
+    /** The Constant DEFAULT_PROPERTY_ALGORITHM. */
     public static final String DEFAULT_PROPERTY_ALGORITHM  = "PBKDF2WithHmacSHA256";
+    
+    /** The Constant PROPERTY_ITERATIONS. */
     public static final String PROPERTY_ITERATIONS = "Pbkdf2PasswordHash.Iterations";
+    
+    /** The Constant DEFAULT_PROPERTY_ITERATIONS. */
     public static final String DEFAULT_PROPERTY_ITERATIONS = "2048";
+    
+    /** The Constant PROPERTY_SALTSIZE. */
     public static final String PROPERTY_SALTSIZE   = "Pbkdf2PasswordHash.SaltSizeBytes";
+    
+    /** The Constant DEFAULT_SALT_SIZE. */
     public static final String DEFAULT_SALT_SIZE   = "32";
+    
+    /** The Constant PROPERTY_KEYSIZE. */
     public static final String PROPERTY_KEYSIZE    = "Pbkdf2PasswordHash.KeySizeBytes";
+    
+    /** The Constant DEFAULT_KEY_SIZE. */
     public static final String DEFAULT_KEY_SIZE    = "32";
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args) {
 
         Pbkdf2PasswordHash pbAndjPasswordHash = new Pbkdf2PasswordHashImpl();
