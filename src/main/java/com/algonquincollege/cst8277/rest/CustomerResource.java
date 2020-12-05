@@ -76,7 +76,7 @@ public class CustomerResource {
      * @return the customers
      */
     @GET        // # GET /customer
-    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
+    @RolesAllowed({ADMIN_ROLE})
     public Response getCustomers() {
         servletContext.log("retrieving all customers ...");
         List<CustomerPojo> custs = customerServiceBean.getAllCustomers();
@@ -197,13 +197,14 @@ public class CustomerResource {
    
     //TODO - endpoints for setting up Orders/OrderLines
 
+
     /**
    * Gets the orders.
    *
    * @param id the id
    * @return the orders
    */
-  @GET                  //custmer/{id}/order
+    @GET                  //custmer/{id}/order
     @RolesAllowed({ADMIN_ROLE,USER_ROLE})
     @Path("/{id}/order")
     public Response getOrders(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id) {
@@ -224,7 +225,7 @@ public class CustomerResource {
      */
     @POST                    //custmer/{id}/order
     @Transactional
-    @RolesAllowed({ADMIN_ROLE,USER_ROLE})
+    @RolesAllowed({ADMIN_ROLE})
     @Path("/{id}/order")
     public Response addOrder(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, OrderPojo newCustomer) {
       Response response = null;

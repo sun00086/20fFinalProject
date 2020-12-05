@@ -5,26 +5,12 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class SecurityUser_.
- */
-@Generated(value="Dali", date="2020-12-01T12:48:45.921-0500")
+@Generated(value="Dali", date="2020-12-05T15:45:23.678-0500")
 @StaticMetamodel(SecurityUser.class)
 public class SecurityUser_ {
-	
-	/** The id. */
 	public static volatile SingularAttribute<SecurityUser, Integer> id;
-	
-	/** The username. */
 	public static volatile SingularAttribute<SecurityUser, String> username;
-	
-	/** The pw hash. */
 	public static volatile SingularAttribute<SecurityUser, String> pwHash;
-	
-	/** The roles. */
 	public static volatile SetAttribute<SecurityUser, SecurityRole> roles;
-	
-	/** The customer. */
 	public static volatile SingularAttribute<SecurityUser, CustomerPojo> customer;
 }
